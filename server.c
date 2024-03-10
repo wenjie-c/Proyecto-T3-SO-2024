@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <mysql.h>
 
 // --- Funciones de base de datos ---
 
