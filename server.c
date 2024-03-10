@@ -8,6 +8,30 @@
 
 // --- Funciones de base de datos ---
 
+int login(MYSQL * cnx,char * Nombre, char * password){ // Devuelve el id del primer usuario con ese nombre y esa contraseña
+    MYSQL_RES * resultados;
+    MYSQL_ROW row;
+    char comando[300];
+    sprintf(comando, "SELECT id FROM Jugador WHERE Nombre='%s' AND pass='%s'", Nombre, password);
+    int err = mysql_query(cnx, comando);
+    if(err!= 0){
+		printf("Error al logear: %u &s\n", mysql_errno(cnx),mysql_error(cnx));
+		exit(1);
+	}
+
+    resultados = mysql_store_result(cnx);
+    row = mysql_fetch_row(resultados);
+    if(row == NULL){
+        return -1;
+    }
+    else{
+        return atoi(row[0]);
+    }
+
+
+
+}
+
 MYSQL * init()
     {
 MYSQL * cnx = mysql_init(NULL);
@@ -93,9 +117,20 @@ int main(){
         switch (tipo)
         {
         case 1: // Registro
+            
 
             break;
         case 2: //Login
+            printf("Peticion de login.\n");
+            token = strtok(NULL,"/");
+            char Nombre[20] = {0};
+            strcpy(Nombre,token);
+            token = strtok(NULL,"/");
+            char password[30] = {0};
+            strcpy(password,token);
+            int id = login(db_cnx,Nombre,password);
+            sprintf(respuesta,"%d",id);
+            write(sock_cnx,respuesta);
             break;
         case 3: //Listar partidas
             break;
@@ -114,5 +149,6 @@ int main(){
     }
 
     close(sock_listen);
+    mysql_close(db_cnx);
     return 0;
 }
