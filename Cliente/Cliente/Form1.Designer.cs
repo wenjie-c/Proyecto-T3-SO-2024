@@ -29,22 +29,110 @@ namespace Cliente
         /// </summary>
         private void InitializeComponent()
         {
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.nombre_lb = new System.Windows.Forms.Label();
+            this.password_lb = new System.Windows.Forms.Label();
+            this.login_btn = new System.Windows.Forms.Button();
+            this.nombre_tb = new System.Windows.Forms.TextBox();
+            this.password_tb = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.94382F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.05618F));
+            this.tableLayoutPanel1.Controls.Add(this.nombre_lb, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.password_lb, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.login_btn, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.nombre_tb, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.password_tb, 1, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(239, 102);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // nombre_lb
+            // 
+            this.nombre_lb.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.nombre_lb.AutoSize = true;
+            this.nombre_lb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.nombre_lb.Location = new System.Drawing.Point(3, 6);
+            this.nombre_lb.Name = "nombre_lb";
+            this.nombre_lb.Size = new System.Drawing.Size(69, 20);
+            this.nombre_lb.TabIndex = 0;
+            this.nombre_lb.Text = "Nombre:";
+            // 
+            // password_lb
+            // 
+            this.password_lb.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.password_lb.AutoSize = true;
+            this.password_lb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.password_lb.Location = new System.Drawing.Point(3, 39);
+            this.password_lb.Name = "password_lb";
+            this.password_lb.Size = new System.Drawing.Size(96, 20);
+            this.password_lb.TabIndex = 1;
+            this.password_lb.Text = "Contraseña:";
+            // 
+            // login_btn
+            // 
+            this.login_btn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.login_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.login_btn.Location = new System.Drawing.Point(110, 69);
+            this.login_btn.Name = "login_btn";
+            this.login_btn.Size = new System.Drawing.Size(126, 30);
+            this.login_btn.TabIndex = 2;
+            this.login_btn.Text = "Login";
+            this.login_btn.UseVisualStyleBackColor = true;
+            this.login_btn.Click += new System.EventHandler(this.login_btn_Click);
+            // 
+            // nombre_tb
+            // 
+            this.nombre_tb.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.nombre_tb.Location = new System.Drawing.Point(110, 3);
+            this.nombre_tb.Name = "nombre_tb";
+            this.nombre_tb.Size = new System.Drawing.Size(126, 20);
+            this.nombre_tb.TabIndex = 3;
+            // 
+            // password_tb
+            // 
+            this.password_tb.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.password_tb.Location = new System.Drawing.Point(110, 36);
+            this.password_tb.Name = "password_tb";
+            this.password_tb.Size = new System.Drawing.Size(126, 20);
+            this.password_tb.TabIndex = 4;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(784, 561);
+            this.ClientSize = new System.Drawing.Size(239, 102);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "Form1";
             this.Text = "Cliente";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label nombre_lb;
+        private System.Windows.Forms.Label password_lb;
+        private System.Windows.Forms.Button login_btn;
+        private System.Windows.Forms.TextBox nombre_tb;
+        private System.Windows.Forms.TextBox password_tb;
     }
 }
 
