@@ -7,6 +7,6 @@ CREATE TABLE Jugador(
 id INT,
 Nombre VARCHAR(20),
 pass VARCHAR(20),
-PRIMARY KEY(ID)
+PRIMARY KEY(id)
 );
 create table Nucleo (id_j integer, id_p integer,FOREIGN KEY(id_j) REFERENCES Jugador(id), FOREIGN KEY(id_p) REFERENCES Partida(id));
