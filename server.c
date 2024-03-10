@@ -130,7 +130,7 @@ int main(){
             strcpy(password,token);
             int id = login(db_cnx,Nombre,password);
             sprintf(respuesta,"%d",id);
-            write(sock_cnx,respuesta);
+            write(sock_cnx,respuesta,strlen(respuesta));
             break;
         case 3: //Listar partidas
             break;
