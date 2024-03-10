@@ -4,8 +4,68 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <mysql.h>
+
+// --- Funciones de base de datos ---
+
+int login(MYSQL * cnx,char * Nombre, char * password){ // Devuelve el id del primer usuario con ese nombre y esa contraseña
+    MYSQL_RES * resultados;
+    MYSQL_ROW row;
+    char comando[300];
+    sprintf(comando, "SELECT id FROM Jugador WHERE Nombre='%s' AND pass='%s'", Nombre, password);
+    int err = mysql_query(cnx, comando);
+    if(err!= 0){
+		printf("Error al logear: %u &s\n", mysql_errno(cnx),mysql_error(cnx));
+		exit(1);
+	}
+
+    resultados = mysql_store_result(cnx);
+    row = mysql_fetch_row(resultados);
+    if(row == NULL){
+        return -1;
+    }
+    else{
+        return atoi(row[0]);
+    }
+
+
+
+}
+
+MYSQL * init()
+    {
+MYSQL * cnx = mysql_init(NULL);
+int err;
+
+if(cnx == NULL){
+		printf("Error al crear la conexion: %u &s\n", mysql_errno(cnx),mysql_error(cnx));
+		exit(1);
+	}
+
+    cnx = mysql_real_connect (cnx, "localhost", "root", "mysql", NULL, 0, NULL, 0);
+
+    if(cnx == NULL){
+		printf("Error al crear la conexion: %u &s\n", mysql_errno(cnx),mysql_error(cnx));
+		exit(1);
+	}
+
+    //mysql_query(cnx, "CREATE DATABASE IF NO EXISTS juego");
+    err=mysql_query(cnx, "use juego");
+	if(err!= 0){
+		printf("Error al crear la tabla: %u &s\n", mysql_errno(cnx),mysql_error(cnx));
+		exit(1);
+	}
+
+    return cnx;
+
+}
+
+// --- Fin de funciones de base de datos ---
 
 int main(){
+
+    MYSQL * db_cnx = init();
+
     // --- Inicialización ---
     int sock_cnx , sock_listen, ret;
     struct sockaddr_in serv_adr;
@@ -34,5 +94,61 @@ int main(){
     /* Proceso de recoger y  generar las respuestas:
         para ello se toma el modelo II.
         */
-       
+    int tipo = 0;
+    char * token;
+    for(int i = 0; i < 5; i++){
+
+        printf("Escuchando ...\n");
+        sock_cnx = accept(sock_listen, NULL, NULL);
+        printf("Conexion establecida!\nProcesando peticion numero %d:",i+1);
+        ret = read(sock_cnx,peticion,sizeof(peticion));
+        peticion[ret] = '\0';
+        printf(" %s\n",peticion);
+
+        token = strtok(peticion,"/");
+        int tipo = atoi(token);
+        
+        /* // Eliminar en el Release y si el switch funciona bien.
+        if(tipo < 1 || tipo > 6){
+            printf("Tipo erroneo: %d",tipo);
+            return 1;
+        }*/
+
+        switch (tipo)
+        {
+        case 1: // Registro
+            
+
+            break;
+        case 2: //Login
+            printf("Peticion de login.\n");
+            token = strtok(NULL,"/");
+            char Nombre[20] = {0};
+            strcpy(Nombre,token);
+            token = strtok(NULL,"/");
+            char password[30] = {0};
+            strcpy(password,token);
+            int id = login(db_cnx,Nombre,password);
+            sprintf(respuesta,"%d",id);
+            write(sock_cnx,respuesta,strlen(respuesta));
+            break;
+        case 3: //Listar partidas
+            break;
+        case 4: // Nueva partida
+            break;
+        case 5: //Enviar mensajes
+            break;
+        case 6: // Consultar mensajes
+            break;
+        default:
+            break;
+        }
+
+        close(sock_cnx);
+
+    }
+
+    close(sock_listen);
+    mysql_close(db_cnx);
+    return 0;
 }
