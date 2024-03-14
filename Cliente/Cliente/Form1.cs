@@ -64,6 +64,7 @@ namespace Cliente
                 {
                     IPAddress direc = IPAddress.Parse("192.168.56.102");
                     IPEndPoint ipep = new IPEndPoint(direc, 9050);
+                    server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     server.Connect(ipep);
 
                     server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
