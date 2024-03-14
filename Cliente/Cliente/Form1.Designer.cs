@@ -64,7 +64,7 @@ namespace Cliente
             this.nombre_lb.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.nombre_lb.AutoSize = true;
             this.nombre_lb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.nombre_lb.Location = new System.Drawing.Point(3, 6);
+            this.nombre_lb.Location = new System.Drawing.Point(3, 7);
             this.nombre_lb.Name = "nombre_lb";
             this.nombre_lb.Size = new System.Drawing.Size(69, 20);
             this.nombre_lb.TabIndex = 0;
@@ -75,7 +75,7 @@ namespace Cliente
             this.password_lb.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.password_lb.AutoSize = true;
             this.password_lb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.password_lb.Location = new System.Drawing.Point(3, 39);
+            this.password_lb.Location = new System.Drawing.Point(3, 41);
             this.password_lb.Name = "password_lb";
             this.password_lb.Size = new System.Drawing.Size(96, 20);
             this.password_lb.TabIndex = 1;
@@ -85,9 +85,9 @@ namespace Cliente
             // 
             this.login_btn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.login_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.login_btn.Location = new System.Drawing.Point(110, 69);
+            this.login_btn.Location = new System.Drawing.Point(110, 71);
             this.login_btn.Name = "login_btn";
-            this.login_btn.Size = new System.Drawing.Size(126, 30);
+            this.login_btn.Size = new System.Drawing.Size(126, 28);
             this.login_btn.TabIndex = 2;
             this.login_btn.Text = "Login";
             this.login_btn.UseVisualStyleBackColor = true;
@@ -104,7 +104,7 @@ namespace Cliente
             // password_tb
             // 
             this.password_tb.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.password_tb.Location = new System.Drawing.Point(110, 36);
+            this.password_tb.Location = new System.Drawing.Point(110, 37);
             this.password_tb.Name = "password_tb";
             this.password_tb.Size = new System.Drawing.Size(126, 20);
             this.password_tb.TabIndex = 4;
