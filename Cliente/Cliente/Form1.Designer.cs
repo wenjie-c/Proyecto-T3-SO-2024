@@ -35,6 +35,7 @@ namespace Cliente
             this.login_btn = new System.Windows.Forms.Button();
             this.nombre_tb = new System.Windows.Forms.TextBox();
             this.password_tb = new System.Windows.Forms.TextBox();
+            this.conectar_desconectar_btn = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,6 +49,7 @@ namespace Cliente
             this.tableLayoutPanel1.Controls.Add(this.login_btn, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.nombre_tb, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.password_tb, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.conectar_desconectar_btn, 0, 2);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -84,6 +86,7 @@ namespace Cliente
             // login_btn
             // 
             this.login_btn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.login_btn.Enabled = false;
             this.login_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.login_btn.Location = new System.Drawing.Point(110, 71);
             this.login_btn.Name = "login_btn";
@@ -109,6 +112,18 @@ namespace Cliente
             this.password_tb.Size = new System.Drawing.Size(126, 20);
             this.password_tb.TabIndex = 4;
             // 
+            // conectar_desconectar_btn
+            // 
+            this.conectar_desconectar_btn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.conectar_desconectar_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.conectar_desconectar_btn.Location = new System.Drawing.Point(3, 71);
+            this.conectar_desconectar_btn.Name = "conectar_desconectar_btn";
+            this.conectar_desconectar_btn.Size = new System.Drawing.Size(101, 28);
+            this.conectar_desconectar_btn.TabIndex = 5;
+            this.conectar_desconectar_btn.Text = "Conectar";
+            this.conectar_desconectar_btn.UseVisualStyleBackColor = true;
+            this.conectar_desconectar_btn.Click += new System.EventHandler(this.conectar_desconectar_btn_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -133,6 +148,7 @@ namespace Cliente
         private System.Windows.Forms.Button login_btn;
         private System.Windows.Forms.TextBox nombre_tb;
         private System.Windows.Forms.TextBox password_tb;
+        private System.Windows.Forms.Button conectar_desconectar_btn;
     }
 }
 
