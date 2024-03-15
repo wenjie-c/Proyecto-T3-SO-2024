@@ -5,6 +5,10 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include <mysql.h>
+#include <pthread.h>
+
+
+MYSQL * db_cnx; // Mejor declararlo como variable global.
 
 // --- Funciones de base de datos ---
 
@@ -62,60 +66,42 @@ if(cnx == NULL){
 
 // --- Fin de funciones de base de datos ---
 
-int main(){
+// --- Funciones del servidor ---
 
-    MYSQL * db_cnx = init();
+/*
+typedef struct{
+    int * sock_cnx;
+    MYSQL * db_cnx;
+} args;
+*/
 
-    // --- Inicialización ---
-    int sock_cnx , sock_listen, ret;
-    struct sockaddr_in serv_adr;
+void *AtenderCliente(void * socket){
+    int sock_cnx;
+    int *s;
+    //args * argumentos = (args *)arguments;
+    s = (int *) socket;
+    sock_cnx = *s;
+
     char peticion[512];
     char respuesta[512];
-    // --- Fin de inicializacion ---
 
-    // --- Abrir Socket ---
-    if ((sock_listen = socket(AF_INET, SOCK_STREAM, 0)) < 0)
-        printf("Error al crear socket.");
+    int terminar = 0;
 
-    // --- Hacer bind al puerto ---
-    memset(&serv_adr, 0 , sizeof(serv_adr));
-    serv_adr.sin_family = AF_INET;
-
-    // --- Asociar el socket a cualquier ip de la maquina ---
-    serv_adr.sin_addr.s_addr = htonl(INADDR_ANY);
-    // --- Escuchamos en el puerto 9050 ---
-    serv_adr.sin_port = htons(9050);
-    if(bind(sock_listen, (struct sockaddr *) &serv_adr, sizeof(serv_adr)) < 0)
-        printf("Error en el bind");
-
-    if (listen(sock_listen, 3) < 0) // Establecer la cola de espera de peticiones en tres.
-        printf("Error en el listen.");
-    
-    /* Proceso de recoger y  generar las respuestas:
-        para ello se toma el modelo II.
-        */
-    int tipo = 0;
-    char * token;
-    for(int i = 0; i < 5; i++){
-
-        printf("Escuchando ...\n");
-        sock_cnx = accept(sock_listen, NULL, NULL);
-        printf("Conexion establecida!\nProcesando peticion numero %d:",i+1);
-        ret = read(sock_cnx,peticion,sizeof(peticion));
+    while(terminar == 0){
+        int ret = read(sock_cnx,peticion,sizeof(peticion));
         peticion[ret] = '\0';
         printf(" %s\n",peticion);
 
+        int tipo;
+        char * token;
         token = strtok(peticion,"/");
-        int tipo = atoi(token);
-        
-        /* // Eliminar en el Release y si el switch funciona bien.
-        if(tipo < 1 || tipo > 6){
-            printf("Tipo erroneo: %d",tipo);
-            return 1;
-        }*/
+        tipo = atoi(token);
 
         switch (tipo)
         {
+        case 0: 
+            terminar = 1;
+            break;
         case 1: // Registro
             
 
@@ -143,9 +129,68 @@ int main(){
         default:
             break;
         }
+    }
+    close(sock_cnx);
 
-        close(sock_cnx);
+}
+// --- Fin de funciones del servidor ---
 
+int main(){
+
+    //MYSQL * 
+    db_cnx = init();
+
+    // --- Inicialización ---
+    int sock_cnx , sock_listen;
+    struct sockaddr_in serv_adr;
+
+    // --- Fin de inicializacion ---
+
+    // --- Abrir Socket ---
+    if ((sock_listen = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+        printf("Error al crear socket.");
+
+    // --- Hacer bind al puerto ---
+    memset(&serv_adr, 0 , sizeof(serv_adr));
+    serv_adr.sin_family = AF_INET;
+
+    // --- Asociar el socket a cualquier ip de la maquina ---
+    serv_adr.sin_addr.s_addr = htonl(INADDR_ANY);
+    // --- Escuchamos en el puerto 9050 ---
+    serv_adr.sin_port = htons(9050);
+    if(bind(sock_listen, (struct sockaddr *) &serv_adr, sizeof(serv_adr)) < 0)
+        printf("Error en el bind");
+
+    if (listen(sock_listen, 3) < 0) // Establecer la cola de espera de peticiones en tres.
+        printf("Error en el listen.");
+    
+    //int sockets[100];
+    pthread_t thread[100];
+    int sockets[100];
+
+    /* Proceso de recoger y  generar las respuestas:
+        para ello se toma el modelo II.
+        */
+    
+    for(int i = 0; i < 5; i++){ // Atiende a 5 clientes a la vez.
+
+        printf("Escuchando ...\n");
+        sock_cnx = accept(sock_listen, NULL, NULL);
+        printf("Conexion establecida!\nProcesando peticion numero %d:",i+1);
+
+        sockets[i] = sock_cnx;
+        /*
+        args arguments;
+        arguments.sock_cnx = sockets[i];
+        arguments.db_cnx = db_cnx;*/
+
+        pthread_create(&thread[i], NULL, AtenderCliente,&sockets[i]);
+        
+
+    }
+
+    for(int i = 0; i < 5 ; i++){
+        pthread_join(thread[i],NULL); // Esperamos a que los 5 hilos completen la conexión para apagarse.
     }
 
     close(sock_listen);
