@@ -8,9 +8,46 @@
 #include <pthread.h>
 
 
-MYSQL * db_cnx; // Mejor declararlo como variable global.
+MYSQL * db_cnx; // Mejor declararlo como variable global.ç
+
+typedef struct{
+    int id_partida;
+    int id_chat;
+    int id_jugadores[2];
+} partida;
+
+typedef struct{
+    int ids[64];
+    int num;
+} listas;
 
 // --- Funciones de base de datos ---
+
+listas listar_partidas(MYSQL * cnx, int id_j){ // Devuelve la lista de ids de partidas.
+    MYSQL_RES * resultados;
+    MYSQL_ROW row;
+    listas res;
+    char comando[300];
+    char comando[300];
+    sprintf(comando, "SELECT Nucleo.id_p FROM Jugador,Nucleo WHERE Nucleo.id_j=%d ", id_j); //Obtener todas las partidas del jugador
+    int err = mysql_query(cnx, comando);
+
+    resultados = mysql_store_result(db_cnx);
+    row = mysql_fetch_row(resultados);
+    int num = 0;
+    if(row == NULL){
+        res.num = 0;
+        return res;
+    }else{
+        while(row != NULL){
+            res.ids[num] = atoi(row[0]);
+            num++;
+        }
+    }
+    res.num = num;
+    return res;
+
+}
 
 int login(MYSQL * cnx,char * Nombre, char * password){ // Devuelve el id del primer usuario con ese nombre y esa contraseña
     MYSQL_RES * resultados;
@@ -119,6 +156,19 @@ void *AtenderCliente(void * socket){
             write(sock_cnx,respuesta,strlen(respuesta));
             break;
         case 3: //Listar partidas
+            printf("Peticion de listar partidas.\n");
+            token = strtok(NULL,"/");
+            int id_j = atoi(token);
+            listas buffer = listar_partidas(db_cnx,id_j);
+            char respuesta[128] = {0};
+            char buffer2[5] = {0};
+            sprintf(respuesta,"%d",buffer.num);
+            for(int i = 0; i < buffer.num; i++){
+                
+                sprintf(buffer2, "/%d",buffer.ids[i]);
+                strcat(respuesta,buffer2);
+            }
+            write(sock_cnx,respuesta,strlen(respuesta));
             break;
         case 4: // Nueva partida
             break;
