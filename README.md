@@ -1,4 +1,4 @@
 # Proyecto-T3-SO-2024
 Proyecto del grupo T3
 
-Version v0.2-dev generado por Wenjie C.
+Version v0.3-dev generado por Wenjie C.
