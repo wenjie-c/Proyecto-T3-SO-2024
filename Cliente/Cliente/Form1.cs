@@ -50,8 +50,8 @@ namespace Cliente
             }catch(SocketException err)
             {
                 MessageBox.Show("Error: " + err.Message);
-                server.Shutdown(SocketShutdown.Both);
-                server.Close();
+                //server.Shutdown(SocketShutdown.Both);
+                //server.Close();
             }
    
         }
@@ -60,14 +60,14 @@ namespace Cliente
         {
             try
             {
+                
                 if (this.conectar_desconectar_btn.Text == "Conectar")
                 {
                     IPAddress direc = IPAddress.Parse("192.168.56.102");
                     IPEndPoint ipep = new IPEndPoint(direc, 9050);
-                    server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    server.Connect(ipep);
+                    this.server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    this.server.Connect(ipep);
 
-                    server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     login_btn.Enabled = true;
                     this.conectar_desconectar_btn.Text = "Desconectar";
                 }
@@ -76,16 +76,17 @@ namespace Cliente
                     string mensaje = "0/";
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                     this.login_btn.Enabled = false;
-                    server.Send(msg);
-                    server.Shutdown(SocketShutdown.Both);
-                    server.Close();
+                    this.server.Send(msg);
+                    this.server.Shutdown(SocketShutdown.Both);
+                    this.conectar_desconectar_btn.Text = "Conectar";
+                    //this.server.Close();
                 }
             }
             catch(Exception err)
             {
                 MessageBox.Show("Error: " + err.Message);
-                server.Shutdown(SocketShutdown.Both);
-                server.Close();
+                //server.Shutdown(SocketShutdown.Both);
+                //server.Close();
             }
         }
     }
