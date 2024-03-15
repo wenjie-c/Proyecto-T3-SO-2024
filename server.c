@@ -92,7 +92,7 @@ void *AtenderCliente(void * socket){
         peticion[ret] = '\0';
         printf(" %s\n",peticion);
 
-        int tipo = 0;
+        int tipo;
         char * token;
         token = strtok(peticion,"/");
         tipo = atoi(token);
