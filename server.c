@@ -41,6 +41,7 @@ listas listar_partidas(MYSQL * cnx, int id_j){ // Devuelve la lista de ids de pa
         while(row != NULL){
             res.ids[num] = atoi(row[0]);
             num++;
+            row = mysql_fetch_row(resultados);
         }
     }
     res.num = num;
