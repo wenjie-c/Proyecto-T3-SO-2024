@@ -47,6 +47,14 @@ namespace Cliente
                 mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
                 MessageBox.Show("Tu id de jugador es: " + mensaje);
 
+                if(mensaje != "-1")
+                {
+                    lista_partidas lista = new lista_partidas();
+                    lista.server = this.server;
+                    lista.id_j = int.Parse(mensaje);
+                    lista.Show();
+                }
+
             }catch(SocketException err)
             {
                 MessageBox.Show("Error: " + err.Message);
