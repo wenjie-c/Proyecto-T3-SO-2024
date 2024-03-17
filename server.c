@@ -140,7 +140,48 @@ void *AtenderCliente(void * socket){
             terminar = 1;
             break;
         case 1: // Registro
-            
+            int id=0;
+
+	strcpy(str_query,"SELECT MAX(id) FROM Jugador;");
+		err=mysql_query (conn, str_query);					
+	if (err!=0)
+	{
+						
+	printf ("Error al consultar datos de la base para la id: %u %s \n",
+	mysql_errno(conn), mysql_error(conn));
+						
+						
+	}
+					
+	resultado = mysql_store_result (conn);
+	id = mysql_fetch_row (resultado);
+	id = id+1;
+					
+	p = strtok( NULL, "/");
+	strcpy (nombre, p);
+	p=strtok(NULL,"/");
+	char contrasenya[20];
+	strcpy(contrasenya,p);
+	printf ("Codigo: %d, Nombre: %s\n", codigo, nombre);
+					
+	printf("Nombre: %s, contrasenya: %s \n ",nombre, contrasenya);
+	sprintf(str_query, "INSERT INTO jugador VALUES ('%d','%s', '%s',%d);",id, nombre,contrasenya,0);
+	err=mysql_query (conn, str_query);
+					
+					
+	if (err!=0)
+	{
+		printf ("Error al consultar datos de la base %u %s \n",
+		mysql_errno(conn), mysql_error(conn));
+								
+			}
+	sprintf(respuesta,"Bienvenido %s \n",nombre);
+	write (sock_conn,respuesta, strlen(respuesta));
+
+
+	mysql_close (conn);
+   	exit(0);
+	
 
             break;
         case 2: //Login
