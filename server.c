@@ -28,7 +28,7 @@ listas listar_partidas(MYSQL * cnx, int id_j){ // Devuelve la lista de ids de pa
     MYSQL_ROW row;
     listas res;
     char comando[300];
-    sprintf(comando, "SELECT Nucleo.id_p FROM Jugador,Nucleo WHERE Nucleo.id_j=%d ", id_j); //Obtener todas las partidas del jugador
+    sprintf(comando, "SELECT Nucleo.id_p FROM Nucleo WHERE Nucleo.id_j=%d ", id_j); //Obtener todas las partidas del jugador
     int err = mysql_query(cnx, comando);
 
     resultados = mysql_store_result(db_cnx);
