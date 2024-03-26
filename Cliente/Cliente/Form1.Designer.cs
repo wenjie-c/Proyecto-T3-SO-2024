@@ -36,6 +36,8 @@ namespace Cliente
             this.nombre_tb = new System.Windows.Forms.TextBox();
             this.password_tb = new System.Windows.Forms.TextBox();
             this.conectar_desconectar_btn = new System.Windows.Forms.Button();
+            this.sign_up_btn = new System.Windows.Forms.Button();
+            this.credit_btn = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,15 +52,17 @@ namespace Cliente
             this.tableLayoutPanel1.Controls.Add(this.nombre_tb, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.password_tb, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.conectar_desconectar_btn, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.sign_up_btn, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.credit_btn, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(239, 102);
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(239, 136);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // nombre_lb
@@ -124,11 +128,35 @@ namespace Cliente
             this.conectar_desconectar_btn.UseVisualStyleBackColor = true;
             this.conectar_desconectar_btn.Click += new System.EventHandler(this.conectar_desconectar_btn_Click);
             // 
+            // sign_up_btn
+            // 
+            this.sign_up_btn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sign_up_btn.Enabled = false;
+            this.sign_up_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.sign_up_btn.Location = new System.Drawing.Point(110, 105);
+            this.sign_up_btn.Name = "sign_up_btn";
+            this.sign_up_btn.Size = new System.Drawing.Size(126, 28);
+            this.sign_up_btn.TabIndex = 6;
+            this.sign_up_btn.Text = "Sign up";
+            this.sign_up_btn.UseVisualStyleBackColor = true;
+            this.sign_up_btn.Click += new System.EventHandler(this.sign_up_btn_Click);
+            // 
+            // credit_btn
+            // 
+            this.credit_btn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.credit_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.credit_btn.Location = new System.Drawing.Point(3, 105);
+            this.credit_btn.Name = "credit_btn";
+            this.credit_btn.Size = new System.Drawing.Size(101, 28);
+            this.credit_btn.TabIndex = 7;
+            this.credit_btn.Text = "Credits";
+            this.credit_btn.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(239, 102);
+            this.ClientSize = new System.Drawing.Size(239, 136);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "Form1";
@@ -149,6 +177,8 @@ namespace Cliente
         private System.Windows.Forms.TextBox nombre_tb;
         private System.Windows.Forms.TextBox password_tb;
         private System.Windows.Forms.Button conectar_desconectar_btn;
+        private System.Windows.Forms.Button sign_up_btn;
+        private System.Windows.Forms.Button credit_btn;
     }
 }
 

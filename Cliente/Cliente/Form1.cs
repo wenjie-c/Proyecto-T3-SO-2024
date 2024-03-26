@@ -77,6 +77,7 @@ namespace Cliente
                     this.server.Connect(ipep);
 
                     login_btn.Enabled = true;
+                    sign_up_btn.Enabled = true;
                     this.conectar_desconectar_btn.Text = "Desconectar";
                 }
                 else
@@ -84,6 +85,7 @@ namespace Cliente
                     string mensaje = "0/";
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                     this.login_btn.Enabled = false;
+                    this.sign_up_btn.Enabled = false;
                     this.server.Send(msg);
                     this.server.Shutdown(SocketShutdown.Both);
                     this.conectar_desconectar_btn.Text = "Conectar";
@@ -96,6 +98,11 @@ namespace Cliente
                 //server.Shutdown(SocketShutdown.Both);
                 //server.Close();
             }
+        }
+
+        private void sign_up_btn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -177,10 +177,6 @@ void *AtenderCliente(void * socket){
 			}
 	sprintf(respuesta,"Bienvenido %s \n",nombre);
 	write (sock_conn,respuesta, strlen(respuesta));
-
-
-	mysql_close (conn);
-   	exit(0);
 	
 
             break;
