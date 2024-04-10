@@ -155,8 +155,13 @@ void *AtenderCliente(void * socket){
 					
 	resultado = mysql_store_result (conn);
 	id = mysql_fetch_row (resultado);
-	id = id+1;
-					
+	if(row ==NULL)
+		printf("Vacio");
+	else{
+		row = mysql_fetch_row (resultado);
+		id = atoi(row);
+		id = id+1;
+		}					
 	p = strtok( NULL, "/");
 	strcpy (nombre, p);
 	p=strtok(NULL,"/");
