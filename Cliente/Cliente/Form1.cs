@@ -72,7 +72,7 @@ namespace Cliente
                 if (this.conectar_desconectar_btn.Text == "Conectar")
                 {
                     IPAddress direc = IPAddress.Parse("192.168.56.102");
-                    IPEndPoint ipep = new IPEndPoint(direc, 9060);
+                    IPEndPoint ipep = new IPEndPoint(direc, 9050);
                     this.server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     this.server.Connect(ipep);
 
@@ -119,7 +119,7 @@ namespace Cliente
                 byte[] msg2 = new byte[80];
                 server.Receive(msg2);
                 mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
-                MessageBox.Show("Bienvenido" + mensaje);
+                MessageBox.Show("Bienvenido al servidor" + mensaje);
 
             }
             catch (SocketException err)
@@ -128,6 +128,11 @@ namespace Cliente
                 //server.Shutdown(SocketShutdown.Both);
                 //server.Close();
             }
+        }
+
+        private void credit_btn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

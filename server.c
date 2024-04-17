@@ -10,14 +10,9 @@
 
 MYSQL * db_cnx; // Mejor declararlo como variable global.ç
 
-int err;
-
-MYSQL_RES *resultado;
-MYSQL_ROW row;
 
 char consulta [80];
-char str_query[512];
-char str_query1[512];
+
 int partidas_ganadas;
 
 typedef struct{
@@ -127,11 +122,13 @@ void *AtenderCliente(void * socket){
 	int *s;
 	//args * argumentos = (args *)arguments;
 	s = (int *) socket;
-	sock_cnx = *s;
-	
+	sock_cnx = *s;	
+	int err;	
+	MYSQL_RES *resultado;
+	MYSQL_ROW row;	
 	char peticion[512];
 	char respuesta[512];
-	
+	char str_query[512];	
 	int terminar = 0;
 	int id=0;
 	
@@ -144,8 +141,7 @@ void *AtenderCliente(void * socket){
 		char * token;
 		token = strtok(peticion,"/");
 		tipo = atoi(token);
-		int p;
-		int nombre;
+		char nombre[20];
 		switch (tipo)
 		{
 		case 0: 
@@ -154,7 +150,7 @@ void *AtenderCliente(void * socket){
 		case 1: // Registro
 			
 			
-			strcpy(str_query,"SELECT MAX(id) FROM Jugador;");
+			strcpy(str_query,"SELECT MAX(id) FROM juego.Jugador;");
 			err=mysql_query (db_cnx, str_query);					
 			if (err!=0)
 			{
@@ -166,23 +162,23 @@ void *AtenderCliente(void * socket){
 			}
 			
 			resultado = mysql_store_result (db_cnx);
-			id = mysql_fetch_row (resultado);
-			if(row ==NULL)
+			row = mysql_fetch_row (resultado);
+			//id = mysql_fetch_row (resultado);
+			if(row == NULL)
 				printf("Vacio");
 			else{
-				row = mysql_fetch_row (resultado);
-				id = atoi(row);
+
+				id = atoi(row[0]);
 				id = id+1;
 			}					
-			p = strtok( NULL, "/");
-			strcpy (nombre, p);
-			p=strtok(NULL,"/");
+			token = strtok( NULL, "/");
+			strcpy (nombre,token);
+			token=strtok(NULL,"/");
 			char contrasenya[20];
-			strcpy(contrasenya,p);
-			printf ("Nombre: %s\n", nombre);
-			
+			strcpy(contrasenya,token);			
+			printf ("Tipo: %d, Nombre: %s\n", tipo, nombre);			
 			printf("Nombre: %s, contrasenya: %s \n ",nombre, contrasenya);
-			sprintf(str_query, "INSERT INTO jugador VALUES ('%d','%s', '%s',%d);",id, nombre,contrasenya,0);
+			sprintf(str_query, "INSERT INTO Jugador VALUES ('%d','%s', '%s');",id ,nombre ,contrasenya);
 			err=mysql_query (db_cnx, str_query);
 			
 			
@@ -192,9 +188,10 @@ void *AtenderCliente(void * socket){
 						mysql_errno(db_cnx), mysql_error(db_cnx));
 				
 			}
-			sprintf(respuesta,"Bienvenido %s \n",nombre);
+			else{
+			sprintf(respuesta,"Bienvenido: %s \n",nombre);
 			write (sock_cnx,respuesta, strlen(respuesta));
-			
+			}
 			
 			break;
 			
@@ -262,7 +259,7 @@ int main(){
 	// --- Asociar el socket a cualquier ip de la maquina ---
 	serv_adr.sin_addr.s_addr = htonl(INADDR_ANY);
 	// --- Escuchamos en el puerto 9050 ---
-	serv_adr.sin_port = htons(9060);
+	serv_adr.sin_port = htons(9050);
 	if(bind(sock_listen, (struct sockaddr *) &serv_adr, sizeof(serv_adr)) < 0)
 		printf("Error en el bind");
 	
