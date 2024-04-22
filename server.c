@@ -10,7 +10,6 @@
 
 MYSQL * db_cnx; // Mejor declararlo como variable global.ç
 
-
 char consulta [80];
 
 int partidas_ganadas;
@@ -31,12 +30,15 @@ typedef struct{
 listas listar_partidas(MYSQL * cnx, int id_j){ // Devuelve la lista de ids de partidas.
 	MYSQL_RES * resultados;
 	MYSQL_ROW row;
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	listas res;
 	char comando[300];
 	sprintf(comando, "SELECT Nucleo.id_p FROM Jugador,Nucleo WHERE Nucleo.id_j=%d ", id_j); //Obtener todas las partidas del jugador
+	pthread_mutex_lock(&mutex);
 	int err = mysql_query(cnx, comando);
 	
 	resultados = mysql_store_result(db_cnx);
+	pthread_mutex_unlock(&mutex);
 	row = mysql_fetch_row(resultados);
 	int num = 0;
 	if(row == NULL){
@@ -57,8 +59,10 @@ listas listar_partidas(MYSQL * cnx, int id_j){ // Devuelve la lista de ids de pa
 int login(MYSQL * cnx,char * Nombre, char * password){ // Devuelve el id del primer usuario con ese nombre y esa contraseña
 	MYSQL_RES * resultados;
 	MYSQL_ROW row;
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	char comando[300];
 	sprintf(comando, "SELECT id FROM Jugador WHERE Nombre='%s' AND pass='%s'", Nombre, password);
+	pthread_mutex_lock(&mutex);
 	int err = mysql_query(cnx, comando);
 	if(err!= 0){
 		printf("Error al logear: %u &s\n", mysql_errno(cnx),mysql_error(cnx));
@@ -66,6 +70,7 @@ int login(MYSQL * cnx,char * Nombre, char * password){ // Devuelve el id del pri
 	}
 	
 	resultados = mysql_store_result(cnx);
+	pthread_mutex_unlock(&mutex);
 	row = mysql_fetch_row(resultados);
 	if(row == NULL){
 		return -1;
@@ -134,6 +139,7 @@ void *AtenderCliente(void * socket){
 	
 	while(terminar == 0){
 		int ret = read(sock_cnx,peticion,sizeof(peticion));
+		
 		peticion[ret] = '\0';
 		printf(" %s\n",peticion);
 		
@@ -238,6 +244,7 @@ void *AtenderCliente(void * socket){
 // --- Fin de funciones del servidor ---
 
 int main(){
+	
 	
 	//MYSQL * 
 	db_cnx = init();
