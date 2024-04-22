@@ -15,6 +15,13 @@ char consulta [80];
 int partidas_ganadas;
 
 typedef struct{
+	int socket;
+	int id;
+	pthread_t thread;
+} Conectado;
+Conectado lista[100];
+
+typedef struct{
 	int id_partida;
 	int id_chat;
 	int id_jugadores[2];
@@ -274,8 +281,8 @@ int main(){
 		printf("Error en el listen.");
 	
 	//int sockets[100];
-	pthread_t thread[100];
-	int sockets[100];
+	//pthread_t thread[100];
+	//int sockets[100];
 	
 	/* Proceso de recoger y  generar las respuestas:
 	para ello se toma el modelo II.
@@ -287,19 +294,17 @@ int main(){
 		sock_cnx = accept(sock_listen, NULL, NULL);
 		printf("Conexion establecida!\nProcesando peticion numero %d:",i+1);
 		
-		sockets[i] = sock_cnx;
-		/*
-		args arguments;
-		arguments.sock_cnx = sockets[i];
-		arguments.db_cnx = db_cnx;*/
+		//sockets[i] = sock_cnx;
+		Conectado temp = {.socket = sock_cnx};
+		lista[i] = temp;
 		
-		pthread_create(&thread[i], NULL, AtenderCliente,&sockets[i]);
+		pthread_create(&lista[i].thread, NULL, AtenderCliente,&lista[i].socket);
 		
 		
 	}
 	
 	for(int i = 0; i < 5 ; i++){
-		pthread_join(thread[i],NULL); // Esperamos a que los 5 hilos completen la conexión para apagarse.
+		pthread_join(lista[i].thread,NULL); // Esperamos a que los 5 hilos completen la conexión para apagarse.
 	}
 	
 	close(sock_listen);
