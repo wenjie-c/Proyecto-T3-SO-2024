@@ -56,14 +56,13 @@ namespace Cliente
             this.tableLayoutPanel1.Controls.Add(this.credit_btn, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(319, 167);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(239, 136);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // nombre_lb
@@ -71,10 +70,9 @@ namespace Cliente
             this.nombre_lb.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.nombre_lb.AutoSize = true;
             this.nombre_lb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.nombre_lb.Location = new System.Drawing.Point(4, 8);
-            this.nombre_lb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.nombre_lb.Location = new System.Drawing.Point(3, 7);
             this.nombre_lb.Name = "nombre_lb";
-            this.nombre_lb.Size = new System.Drawing.Size(87, 25);
+            this.nombre_lb.Size = new System.Drawing.Size(69, 20);
             this.nombre_lb.TabIndex = 0;
             this.nombre_lb.Text = "Nombre:";
             // 
@@ -83,10 +81,9 @@ namespace Cliente
             this.password_lb.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.password_lb.AutoSize = true;
             this.password_lb.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.password_lb.Location = new System.Drawing.Point(4, 49);
-            this.password_lb.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.password_lb.Location = new System.Drawing.Point(3, 41);
             this.password_lb.Name = "password_lb";
-            this.password_lb.Size = new System.Drawing.Size(120, 25);
+            this.password_lb.Size = new System.Drawing.Size(96, 20);
             this.password_lb.TabIndex = 1;
             this.password_lb.Text = "Contraseña:";
             // 
@@ -95,10 +92,9 @@ namespace Cliente
             this.login_btn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.login_btn.Enabled = false;
             this.login_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.login_btn.Location = new System.Drawing.Point(147, 86);
-            this.login_btn.Margin = new System.Windows.Forms.Padding(4);
+            this.login_btn.Location = new System.Drawing.Point(110, 71);
             this.login_btn.Name = "login_btn";
-            this.login_btn.Size = new System.Drawing.Size(168, 33);
+            this.login_btn.Size = new System.Drawing.Size(126, 28);
             this.login_btn.TabIndex = 2;
             this.login_btn.Text = "Login";
             this.login_btn.UseVisualStyleBackColor = true;
@@ -107,29 +103,26 @@ namespace Cliente
             // nombre_tb
             // 
             this.nombre_tb.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.nombre_tb.Location = new System.Drawing.Point(147, 4);
-            this.nombre_tb.Margin = new System.Windows.Forms.Padding(4);
+            this.nombre_tb.Location = new System.Drawing.Point(110, 3);
             this.nombre_tb.Name = "nombre_tb";
-            this.nombre_tb.Size = new System.Drawing.Size(168, 22);
+            this.nombre_tb.Size = new System.Drawing.Size(126, 20);
             this.nombre_tb.TabIndex = 3;
             // 
             // password_tb
             // 
             this.password_tb.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.password_tb.Location = new System.Drawing.Point(147, 45);
-            this.password_tb.Margin = new System.Windows.Forms.Padding(4);
+            this.password_tb.Location = new System.Drawing.Point(110, 37);
             this.password_tb.Name = "password_tb";
-            this.password_tb.Size = new System.Drawing.Size(168, 22);
+            this.password_tb.Size = new System.Drawing.Size(126, 20);
             this.password_tb.TabIndex = 4;
             // 
             // conectar_desconectar_btn
             // 
             this.conectar_desconectar_btn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.conectar_desconectar_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.conectar_desconectar_btn.Location = new System.Drawing.Point(4, 86);
-            this.conectar_desconectar_btn.Margin = new System.Windows.Forms.Padding(4);
+            this.conectar_desconectar_btn.Location = new System.Drawing.Point(3, 71);
             this.conectar_desconectar_btn.Name = "conectar_desconectar_btn";
-            this.conectar_desconectar_btn.Size = new System.Drawing.Size(135, 33);
+            this.conectar_desconectar_btn.Size = new System.Drawing.Size(101, 28);
             this.conectar_desconectar_btn.TabIndex = 5;
             this.conectar_desconectar_btn.Text = "Conectar";
             this.conectar_desconectar_btn.UseVisualStyleBackColor = true;
@@ -140,10 +133,9 @@ namespace Cliente
             this.sign_up_btn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sign_up_btn.Enabled = false;
             this.sign_up_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.sign_up_btn.Location = new System.Drawing.Point(147, 127);
-            this.sign_up_btn.Margin = new System.Windows.Forms.Padding(4);
+            this.sign_up_btn.Location = new System.Drawing.Point(110, 105);
             this.sign_up_btn.Name = "sign_up_btn";
-            this.sign_up_btn.Size = new System.Drawing.Size(168, 36);
+            this.sign_up_btn.Size = new System.Drawing.Size(126, 28);
             this.sign_up_btn.TabIndex = 6;
             this.sign_up_btn.Text = "Sign up";
             this.sign_up_btn.UseVisualStyleBackColor = true;
@@ -153,10 +145,9 @@ namespace Cliente
             // 
             this.credit_btn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.credit_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.credit_btn.Location = new System.Drawing.Point(4, 127);
-            this.credit_btn.Margin = new System.Windows.Forms.Padding(4);
+            this.credit_btn.Location = new System.Drawing.Point(3, 105);
             this.credit_btn.Name = "credit_btn";
-            this.credit_btn.Size = new System.Drawing.Size(135, 36);
+            this.credit_btn.Size = new System.Drawing.Size(101, 28);
             this.credit_btn.TabIndex = 7;
             this.credit_btn.Text = "Credits";
             this.credit_btn.UseVisualStyleBackColor = true;
@@ -164,12 +155,11 @@ namespace Cliente
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(319, 167);
+            this.ClientSize = new System.Drawing.Size(239, 136);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Cliente";
             this.Load += new System.EventHandler(this.Form1_Load);
