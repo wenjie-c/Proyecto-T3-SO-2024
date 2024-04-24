@@ -17,6 +17,7 @@ int partidas_ganadas;
 typedef struct{
 	int socket;
 	int id;
+	char nombre[20];
 	pthread_t thread;
 } Conectado;
 Conectado lista[100];
@@ -30,7 +31,7 @@ typedef struct{
 typedef struct{
 	int ids[64];
 	int num;
-} listas;
+} listas; // Lista de partidas de un jugador
 
 // --- Funciones de base de datos ---
 
@@ -129,11 +130,12 @@ MYSQL * db_cnx;
 } args;
 */
 
-void *AtenderCliente(void * socket){
+void *AtenderCliente(void * temporal){
 	int sock_cnx;
 	int *s;
+	Conectado * conectado = (Conectado *) temporal;
 	//args * argumentos = (args *)arguments;
-	s = (int *) socket;
+	s = (int *) conectado->socket;
 	sock_cnx = *s;	
 	int err;	
 	MYSQL_RES *resultado;
@@ -213,17 +215,20 @@ void *AtenderCliente(void * socket){
 			token = strtok(NULL,"/");
 			char Nombre[20] = {0};
 			strcpy(Nombre,token);
+			strcpy(conectado->nombre,token);
 			token = strtok(NULL,"/");
 			char password[30] = {0};
 			strcpy(password,token);
 			int id = login(db_cnx,Nombre,password);
+			conectado->id = id;
 			sprintf(respuesta,"%d",id);
 			write(sock_cnx,respuesta,strlen(respuesta));
 			break;
 		case 3: //Listar partidas
 			printf("Peticion de listar partidas.\n");
-			token = strtok(NULL,"/");
-			int id_j = atoi(token);
+			//token = strtok(NULL,"/");
+			//int id_j = atoi(token);
+			int id_j = conectado->id;
 			listas buffer = listar_partidas(db_cnx,id_j);
 			char respuesta[128] = {0};
 			char buffer2[5] = {0};
@@ -298,7 +303,7 @@ int main(){
 		Conectado temp = {.socket = sock_cnx};
 		lista[i] = temp;
 		
-		pthread_create(&lista[i].thread, NULL, AtenderCliente,&lista[i].socket);
+		pthread_create(&lista[i].thread, NULL, AtenderCliente,&lista[i]);
 		
 		
 	}
