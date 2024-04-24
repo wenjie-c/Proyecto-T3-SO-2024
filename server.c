@@ -130,7 +130,7 @@ MYSQL * db_cnx;
 } args;
 */
 
-void * AtenderCliente(void * temporal){
+void AtenderCliente(void * temporal){
 	int sock_cnx;
 	int *s;
 	int * index = (int *)temporal;
@@ -303,7 +303,8 @@ int main(){
 		Conectado temp = {.socket = sock_cnx};
 		lista[i] = temp;
 		
-		pthread_create(&lista[i].thread, NULL, AtenderCliente,&i);
+		//pthread_create(&lista[i].thread, NULL, AtenderCliente,&i);
+		AtenderCliente(&i);
 		
 		
 	}
