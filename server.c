@@ -41,7 +41,7 @@ listas listar_partidas(MYSQL * cnx, int id_j){ // Devuelve la lista de ids de pa
 	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	listas res;
 	char comando[300];
-	sprintf(comando, "SELECT Nucleo.id_p FROM Jugador,Nucleo WHERE Nucleo.id_j=%d ", id_j); //Obtener todas las partidas del jugador
+	sprintf(comando, "SELECT id_p FROM Nucleo WHERE id_j=%d ", id_j); //Obtener todas las partidas del jugador
 	pthread_mutex_lock(&mutex);
 	int err = mysql_query(cnx, comando);
 	
@@ -133,10 +133,11 @@ MYSQL * db_cnx;
 void * AtenderCliente(void * temporal){
 	int sock_cnx;
 	int *s;
-	int * index = (int *)temporal;
-	Conectado * conectado = &lista[*index];
+	//int  index = *(int *)temporal;
+	Conectado * conectado = (Conectado *)temporal;
 	//args * argumentos = (args *)arguments;
-	sock_cnx = conectado->socket;	
+	sock_cnx = conectado->socket;
+	printf("\nSocket: %d", sock_cnx)	;
 	int err;	
 	MYSQL_RES *resultado;
 	MYSQL_ROW row;	
@@ -303,7 +304,7 @@ int main(){
 		Conectado temp = {.socket = sock_cnx};
 		lista[i] = temp;
 		
-		pthread_create(&lista[i].thread, NULL, AtenderCliente,&i);
+		pthread_create(&lista[i].thread, NULL, AtenderCliente,&lista[i]);
 		
 		
 	}
