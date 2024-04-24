@@ -222,7 +222,7 @@ void * AtenderCliente(void * temporal){
 			strcpy(password,token);
 			int id = login(db_cnx,Nombre,password);
 			conectado->id = id;
-			sprintf(respuesta,"%d",id);
+			sprintf(respuesta,"2/%d",id);
 			write(sock_cnx,respuesta,strlen(respuesta));
 			break;
 		case 3: //Listar partidas
@@ -233,12 +233,13 @@ void * AtenderCliente(void * temporal){
 			listas buffer = listar_partidas(db_cnx,id_j);
 			char respuesta[128] = {0};
 			char buffer2[5] = {0};
-			sprintf(respuesta,"%d",buffer.num);
+			sprintf(respuesta,"3/%d",buffer.num);
 			for(int i = 0; i < buffer.num; i++){
 				
 				sprintf(buffer2, "/%d",buffer.ids[i]);
 				strcat(respuesta,buffer2);
 			}
+			printf("%s\n",respuesta);
 			write(sock_cnx,respuesta,strlen(respuesta));
 			break;
 		case 4: // Nueva partida

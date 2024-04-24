@@ -37,7 +37,7 @@ namespace Cliente
             this.password_tb = new System.Windows.Forms.TextBox();
             this.conectar_desconectar_btn = new System.Windows.Forms.Button();
             this.sign_up_btn = new System.Windows.Forms.Button();
-            this.credit_btn = new System.Windows.Forms.Button();
+            this.play_btn = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,7 +53,7 @@ namespace Cliente
             this.tableLayoutPanel1.Controls.Add(this.password_tb, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.conectar_desconectar_btn, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.sign_up_btn, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.credit_btn, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.play_btn, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -141,17 +141,18 @@ namespace Cliente
             this.sign_up_btn.UseVisualStyleBackColor = true;
             this.sign_up_btn.Click += new System.EventHandler(this.sign_up_btn_Click);
             // 
-            // credit_btn
+            // play_btn
             // 
-            this.credit_btn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.credit_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.credit_btn.Location = new System.Drawing.Point(3, 105);
-            this.credit_btn.Name = "credit_btn";
-            this.credit_btn.Size = new System.Drawing.Size(101, 28);
-            this.credit_btn.TabIndex = 7;
-            this.credit_btn.Text = "Credits";
-            this.credit_btn.UseVisualStyleBackColor = true;
-            this.credit_btn.Click += new System.EventHandler(this.credit_btn_Click);
+            this.play_btn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.play_btn.Enabled = false;
+            this.play_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.play_btn.Location = new System.Drawing.Point(3, 105);
+            this.play_btn.Name = "play_btn";
+            this.play_btn.Size = new System.Drawing.Size(101, 28);
+            this.play_btn.TabIndex = 7;
+            this.play_btn.Text = "Play";
+            this.play_btn.UseVisualStyleBackColor = true;
+            this.play_btn.Click += new System.EventHandler(this.play_btn_Click);
             // 
             // Form1
             // 
@@ -179,7 +180,7 @@ namespace Cliente
         private System.Windows.Forms.TextBox password_tb;
         private System.Windows.Forms.Button conectar_desconectar_btn;
         private System.Windows.Forms.Button sign_up_btn;
-        private System.Windows.Forms.Button credit_btn;
+        private System.Windows.Forms.Button play_btn;
     }
 }
 

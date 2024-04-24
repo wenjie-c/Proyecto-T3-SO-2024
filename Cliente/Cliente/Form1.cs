@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
@@ -14,7 +15,45 @@ namespace Cliente
 {
     public partial class Form1 : Form
     {
+
+        Thread atender;
+        private void AtenderServidor()
+        {
+            while (true)
+            {
+                byte[] incoming_msg = new byte[128];
+                server.Receive(incoming_msg);
+                string msg = Encoding.ASCII.GetString(incoming_msg).Split('\0')[0];
+                string[] trozos = msg.Split('/');
+
+                switch (Convert.ToInt32(trozos[0]))
+                {
+                    case 2:
+                        this.id_jugador = Convert.ToInt32(trozos[1]);
+                        MessageBox.Show("Tu id de jugador es: " + trozos[1]);
+                        if (trozos[1] != "-1")
+                        {
+                            play_btn.Enabled = true;
+                        }
+                        break;
+                    case 3:
+                        string[] mensaje = new string[trozos.Length - 1];
+                        for(int i = 1; i < trozos.Length; i++)
+                        {
+                            mensaje[i-1] = trozos[i];
+                        }
+                        lista.parsing_server(mensaje);
+                        break;
+                        
+
+                       
+
+                }
+            }
+        }
         Socket server;
+        private int id_jugador;
+        lista_partidas lista;
         
         public Form1()
         {
@@ -23,7 +62,7 @@ namespace Cliente
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            CheckForIllegalCrossThreadCalls = false;
         }
 
         private void login_btn_Click(object sender, EventArgs e)
@@ -42,18 +81,7 @@ namespace Cliente
                 string mensaje = $"2/{nombre_tb.Text}/{password_tb.Text}";
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
-                byte[] msg2 = new byte[80];
-                server.Receive(msg2);
-                mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
-                MessageBox.Show("Tu id de jugador es: " + mensaje);
-
-                if(mensaje != "-1")
-                {
-                    lista_partidas lista = new lista_partidas();
-                    lista.server = this.server;
-                    lista.id_j = int.Parse(mensaje);
-                    lista.Show();
-                }
+                
 
             }catch(SocketException err)
             {
@@ -79,6 +107,10 @@ namespace Cliente
                     login_btn.Enabled = true;
                     sign_up_btn.Enabled = true;
                     this.conectar_desconectar_btn.Text = "Desconectar";
+
+                    ThreadStart ts = delegate { AtenderServidor(); };
+                    atender = new Thread(ts);
+                    atender.Start();
                 }
                 else
                 {
@@ -86,7 +118,9 @@ namespace Cliente
                     byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                     this.login_btn.Enabled = false;
                     this.sign_up_btn.Enabled = false;
+                    this.play_btn.Enabled = false;
                     this.server.Send(msg);
+                    atender.Abort();
                     this.server.Shutdown(SocketShutdown.Both);
                     this.conectar_desconectar_btn.Text = "Conectar";
                     //this.server.Close();
@@ -130,9 +164,12 @@ namespace Cliente
             }
         }
 
-        private void credit_btn_Click(object sender, EventArgs e)
+        private void play_btn_Click(object sender, EventArgs e)
         {
-
+            lista = new lista_partidas();
+            lista.server = this.server;
+            lista.id_j = int.Parse(this.id_jugador.ToString());
+            lista.Show();
         }
     }
 }

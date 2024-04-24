@@ -24,19 +24,18 @@ namespace Cliente
 
         private void lista_partidas_Load(object sender, EventArgs e)
         {
-            string mensaje = $"3/{id_j}";
+            string mensaje = $"3/";
             byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
             server.Send(msg);
-            byte[] msg2 = new byte[80];
-            server.Receive(msg2);
-            mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
-
-            string[] total = mensaje.Split('/');
-
+            
+        }
+        public void parsing_server(string[] total)
+        {
+            
             if (int.Parse(total[0]) != 0)
             {
                 lista_partidas_lsbx.Items.Clear();
-                for(int i = 0; i < int.Parse(total[0]); i++)
+                for (int i = 0; i < int.Parse(total[0]); i++)
                 {
                     lista_partidas_lsbx.Items.Add(total[i+1]);
                 }
