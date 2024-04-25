@@ -119,7 +119,7 @@ namespace Cliente
                 byte[] msg2 = new byte[80];
                 server.Receive(msg2);
                 mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
-                MessageBox.Show("Bienvenido al servidor" + mensaje);
+                MessageBox.Show("" + mensaje);
 
             }
             catch (SocketException err)
