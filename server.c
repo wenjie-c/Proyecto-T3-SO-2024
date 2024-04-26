@@ -288,3 +288,39 @@ int main(){
     mysql_close(db_cnx);
     return 0;
 }
+#define MAX_TROZOS 3
+#define MAX_USUARIO_LEN 50
+#define MAX_CONTRASEÑA_LEN 50
+
+typedef struct {
+    char username[MAX_USUARIO_LEN];
+    char password[MAX_CONTRASEÑA_LEN];
+} User;
+
+void registrarUsuario(char trozos[MAX_TROZOS][MAX_USUARIO_LEN], User *usuario) {
+    if (strlen(trozos[1]) >= MAX_USUARIO_LEN || strlen(trozos[2]) >= MAX_CONTRASEÑA_LEN) {
+        printf("Nombre de usuario o contraseña demasiado largos.\n");
+        return;
+    }
+    strcpy(usuario->usuario, trozos[1]);
+    strcpy(usuario->contraseña, trozos[2]);
+    printf("Usuario registrado correctamente.\n");
+}
+
+int main() {
+    char trozos[MAX_TROZOS][MAX_USUARIO_LEN] = {"REGISTRAR", "usuario", "contraseña"};
+    User usuario;
+
+    switch (trozos[0][0]) {
+        case 'R':
+            registrarUsuario(trozos, &usuario);
+            break;
+        // Otros casos 
+        default:
+            printf("Comando desconocido.\n");
+            break;
+    }
+
+    return 0;
+}
+
