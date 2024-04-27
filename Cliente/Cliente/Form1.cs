@@ -44,7 +44,9 @@ namespace Cliente
                         }
                         lista.parsing_server(mensaje);
                         break;
-                        
+                    case 4:
+                        lista.add_partida(Convert.ToInt32(trozos[1]));
+                        break;
 
                        
 

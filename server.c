@@ -35,6 +35,44 @@ typedef struct{
 
 // --- Funciones de base de datos ---
 
+int crear_partida(int id_jugador){
+	int err;
+	MYSQL_RES * resultado;
+	MYSQL_ROW ultimo_id;
+	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+	
+	
+	// No se si crear quiero añadir el chat teniendo en cuenta de que en futuro lo podriamos quitarlo como base de datos.
+	//Creamos una entrada para la tabla de Partida
+	err = mysql_query(db_cnx, "INSERT INTO Partida (chat_id) VALUES (NULL);");
+	if(err!= 0){
+		printf("Error al crear nueva partida: %u &s\n", mysql_errno(db_cnx),mysql_error(db_cnx));
+		exit(1);
+	}
+	//Como no nos devuelve el id, el server tiene que buscarlo
+	err = mysql_query(db_cnx,"SELECT MAX(id) FROM Partida;");
+	if(err!= 0){
+		printf("Error al seleccionar el ultimo id: %u &s\n", mysql_errno(db_cnx),mysql_error(db_cnx));
+		exit(1);
+	}
+	resultado = mysql_store_result(db_cnx);
+	ultimo_id = mysql_fetch_row(resultado); // Obtenemos la única fila
+	
+	int id_partida_creada = atoi(ultimo_id[0]);
+	char comando[300];
+	sprintf(comando,"INSERT INTO Nucleo (id_j,id_p) VALUES (%d,%d);",id_jugador,id_partida_creada); // Hay que crear una relacion entre la partida y el jugador.
+	//Creamos una entrada para la tabla de Nucleo
+	err = mysql_query(db_cnx, comando);
+	if(err!= 0){
+		printf("Error al crear el Core: %u &s\n", mysql_errno(db_cnx),mysql_error(db_cnx));
+		exit(1);
+	}
+	pthread_mutex_unlock(&mutex);
+	printf("Nueva partida creada con id: %d\n",id_partida_creada);
+	
+	return id_partida_creada;
+}
+
 listas listar_partidas(MYSQL * cnx, int id_j){ // Devuelve la lista de ids de partidas.
 	MYSQL_RES * resultados;
 	MYSQL_ROW row;
@@ -231,7 +269,6 @@ void * AtenderCliente(void * temporal){
 			//int id_j = atoi(token);
 			int id_j = conectado->id;
 			listas buffer = listar_partidas(db_cnx,id_j);
-			char respuesta[128] = {0};
 			char buffer2[5] = {0};
 			sprintf(respuesta,"3/%d",buffer.num);
 			for(int i = 0; i < buffer.num; i++){
@@ -243,6 +280,15 @@ void * AtenderCliente(void * temporal){
 			write(sock_cnx,respuesta,strlen(respuesta));
 			break;
 		case 4: // Nueva partida
+			printf("Peticion de crear una nueva partida.\n");
+			
+			token = strtok(peticion,"/");
+			int config = atoi(token); //Numero de configuracion.
+			
+			int id_partida_creada = crear_partida(conectado->id);
+			sprintf(respuesta,"4/%d",id_partida_creada);
+			printf("Enviando: %s\n",respuesta);
+			write(sock_cnx,respuesta,strlen(respuesta));
 			break;
 		case 5: //Enviar mensajes
 			break;

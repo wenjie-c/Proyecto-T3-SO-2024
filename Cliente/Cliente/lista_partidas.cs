@@ -41,5 +41,17 @@ namespace Cliente
                 }
             }
         }
+
+        private void crear_partida_btn_Click(object sender, EventArgs e)
+        {
+            string mensaje = "4/0";
+            byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
+            server.Send(msg);
+        }
+
+        public void add_partida(int id_partida)
+        {
+            lista_partidas_lsbx.Items.Add(id_partida);
+        }
     }
 }

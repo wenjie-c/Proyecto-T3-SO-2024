@@ -29,24 +29,13 @@ namespace Cliente
         /// </summary>
         private void InitializeComponent()
         {
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lista_partidas_lsbx = new System.Windows.Forms.ListBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.btn_group_box = new System.Windows.Forms.GroupBox();
+            this.crear_partida_btn = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
+            this.btn_group_box.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 92.18289F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.817109F));
-            this.tableLayoutPanel1.Controls.Add(this.lista_partidas_lsbx, 0, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(580, 757);
-            this.tableLayoutPanel1.TabIndex = 0;
             // 
             // lista_partidas_lsbx
             // 
@@ -58,6 +47,44 @@ namespace Cliente
             this.lista_partidas_lsbx.Name = "lista_partidas_lsbx";
             this.lista_partidas_lsbx.Size = new System.Drawing.Size(528, 751);
             this.lista_partidas_lsbx.TabIndex = 0;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 92.18289F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 7.817109F));
+            this.tableLayoutPanel1.Controls.Add(this.lista_partidas_lsbx, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btn_group_box, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(580, 757);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // btn_group_box
+            // 
+            this.btn_group_box.Controls.Add(this.crear_partida_btn);
+            this.btn_group_box.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btn_group_box.Location = new System.Drawing.Point(537, 3);
+            this.btn_group_box.Name = "btn_group_box";
+            this.btn_group_box.Size = new System.Drawing.Size(40, 751);
+            this.btn_group_box.TabIndex = 1;
+            this.btn_group_box.TabStop = false;
+            // 
+            // crear_partida_btn
+            // 
+            this.crear_partida_btn.BackColor = System.Drawing.Color.Silver;
+            this.crear_partida_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
+            this.crear_partida_btn.ForeColor = System.Drawing.Color.Black;
+            this.crear_partida_btn.Location = new System.Drawing.Point(0, 0);
+            this.crear_partida_btn.Name = "crear_partida_btn";
+            this.crear_partida_btn.Size = new System.Drawing.Size(40, 40);
+            this.crear_partida_btn.TabIndex = 0;
+            this.crear_partida_btn.Text = "+";
+            this.crear_partida_btn.UseVisualStyleBackColor = false;
+            this.crear_partida_btn.Click += new System.EventHandler(this.crear_partida_btn_Click);
             // 
             // lista_partidas
             // 
@@ -71,13 +98,16 @@ namespace Cliente
             this.Text = "Lista de partidas";
             this.Load += new System.EventHandler(this.lista_partidas_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.btn_group_box.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ListBox lista_partidas_lsbx;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.GroupBox btn_group_box;
+        private System.Windows.Forms.Button crear_partida_btn;
     }
 }
