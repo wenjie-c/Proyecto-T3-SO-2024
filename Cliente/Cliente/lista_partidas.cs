@@ -51,6 +51,11 @@ namespace Cliente
 
         public void add_partida(int id_partida)
         {
+            if(id_partida == -1)
+            {
+                MessageBox.Show("Error al crear una nueva partida!");
+                return;
+            }
             lista_partidas_lsbx.Items.Add(id_partida);
         }
     }

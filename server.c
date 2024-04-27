@@ -47,7 +47,7 @@ int crear_partida(int id_jugador){
 	err = mysql_query(db_cnx, "INSERT INTO Partida (chat_id) VALUES (NULL);");
 	if(err!= 0){
 		printf("Error al crear nueva partida: %u &s\n", mysql_errno(db_cnx),mysql_error(db_cnx));
-		exit(1);
+		return -1;
 	}
 	//Como no nos devuelve el id, el server tiene que buscarlo
 	err = mysql_query(db_cnx,"SELECT MAX(id) FROM Partida;");
@@ -65,7 +65,7 @@ int crear_partida(int id_jugador){
 	err = mysql_query(db_cnx, comando);
 	if(err!= 0){
 		printf("Error al crear el Core: %u &s\n", mysql_errno(db_cnx),mysql_error(db_cnx));
-		exit(1);
+		return -1;
 	}
 	pthread_mutex_unlock(&mutex);
 	printf("Nueva partida creada con id: %d\n",id_partida_creada);
