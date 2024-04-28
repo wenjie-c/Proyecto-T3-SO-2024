@@ -38,7 +38,12 @@ namespace Cliente
             this.conectar_desconectar_btn = new System.Windows.Forms.Button();
             this.sign_up_btn = new System.Windows.Forms.Button();
             this.credit_btn = new System.Windows.Forms.Button();
+            this.ChatLocalBox = new System.Windows.Forms.GroupBox();
+            this.LocalBtn = new System.Windows.Forms.Button();
+            this.LocalMsg = new System.Windows.Forms.TextBox();
+            this.LocalScreen = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
+            this.ChatLocalBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -46,6 +51,7 @@ namespace Cliente
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.94382F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.05618F));
+            this.tableLayoutPanel1.Controls.Add(this.ChatLocalBox, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.nombre_lb, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.password_lb, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.login_btn, 1, 2);
@@ -58,13 +64,16 @@ namespace Cliente
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(319, 167);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(328, 421);
             this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // nombre_lb
             // 
@@ -162,11 +171,55 @@ namespace Cliente
             this.credit_btn.UseVisualStyleBackColor = true;
             this.credit_btn.Click += new System.EventHandler(this.credit_btn_Click);
             // 
+            // ChatLocalBox
+            // 
+            this.ChatLocalBox.Controls.Add(this.LocalBtn);
+            this.ChatLocalBox.Controls.Add(this.LocalMsg);
+            this.ChatLocalBox.Controls.Add(this.LocalScreen);
+            this.ChatLocalBox.Location = new System.Drawing.Point(4, 178);
+            this.ChatLocalBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ChatLocalBox.Name = "ChatLocalBox";
+            this.ChatLocalBox.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.ChatLocalBox.Size = new System.Drawing.Size(276, 232);
+            this.ChatLocalBox.TabIndex = 58;
+            this.ChatLocalBox.TabStop = false;
+            this.ChatLocalBox.Text = "Chat Local";
+            // 
+            // LocalBtn
+            // 
+            this.LocalBtn.Location = new System.Drawing.Point(175, 192);
+            this.LocalBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.LocalBtn.Name = "LocalBtn";
+            this.LocalBtn.Size = new System.Drawing.Size(81, 36);
+            this.LocalBtn.TabIndex = 48;
+            this.LocalBtn.Text = "Enviar";
+            this.LocalBtn.UseVisualStyleBackColor = true;
+            this.LocalBtn.Click += new System.EventHandler(this.LocalBtn_Click);
+            // 
+            // LocalMsg
+            // 
+            this.LocalMsg.Location = new System.Drawing.Point(5, 192);
+            this.LocalMsg.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.LocalMsg.Multiline = true;
+            this.LocalMsg.Name = "LocalMsg";
+            this.LocalMsg.Size = new System.Drawing.Size(163, 36);
+            this.LocalMsg.TabIndex = 46;
+            // 
+            // LocalScreen
+            // 
+            this.LocalScreen.Location = new System.Drawing.Point(5, 20);
+            this.LocalScreen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.LocalScreen.Multiline = true;
+            this.LocalScreen.Name = "LocalScreen";
+            this.LocalScreen.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.LocalScreen.Size = new System.Drawing.Size(251, 168);
+            this.LocalScreen.TabIndex = 47;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(319, 167);
+            this.ClientSize = new System.Drawing.Size(328, 421);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -175,6 +228,8 @@ namespace Cliente
             this.Load += new System.EventHandler(this.Form1_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.ChatLocalBox.ResumeLayout(false);
+            this.ChatLocalBox.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -190,6 +245,10 @@ namespace Cliente
         private System.Windows.Forms.Button conectar_desconectar_btn;
         private System.Windows.Forms.Button sign_up_btn;
         private System.Windows.Forms.Button credit_btn;
+        private System.Windows.Forms.GroupBox ChatLocalBox;
+        private System.Windows.Forms.Button LocalBtn;
+        private System.Windows.Forms.TextBox LocalMsg;
+        private System.Windows.Forms.TextBox LocalScreen;
     }
 }
 

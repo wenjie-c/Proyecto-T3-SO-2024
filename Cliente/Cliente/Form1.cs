@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection.Emit;
 
 namespace Cliente
 {
@@ -133,6 +134,21 @@ namespace Cliente
         private void credit_btn_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void LocalBtn_Click(object sender, EventArgs e)
+        {
+            string mensaje = "5/" + this.MiPartida + "/" + label7.Text + "/" + LocalMsg.Text;
+
+            GlobalMsg.Text = "";
+            // Enviamos al servidor el nombre tecleado
+            byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
+            server.Send(msg);
         }
     }
 }
