@@ -58,5 +58,29 @@ namespace Cliente
             }
             lista_partidas_lsbx.Items.Add(id_partida);
         }
+
+        private void lista_partidas_lsbx_Enter(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void join_btn_Click(object sender, EventArgs e)
+        {
+            if ((lista_partidas_lsbx.Items[0].ToString() == "No has creado ninguna partida."))
+            {
+                MessageBox.Show("Primero crea una partida!");
+            }
+            else
+            {
+                var id_partida = lista_partidas_lsbx.SelectedItem.ToString();
+                string mensaje = $"6/{id_partida}";
+                byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
+                server.Send(msg);
+            }
+        }
+        public int GetIdPartida()
+        {
+            return Convert.ToInt32(this.lista_partidas_lsbx.SelectedItem);
+        }
     }
 }

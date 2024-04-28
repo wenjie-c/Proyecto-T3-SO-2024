@@ -32,6 +32,8 @@ namespace Cliente
             this.lista_partidas_lsbx = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btn_group_box = new System.Windows.Forms.GroupBox();
+            this.join_btn = new System.Windows.Forms.Button();
+            this.eliminar_partida_btn = new System.Windows.Forms.Button();
             this.crear_partida_btn = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.btn_group_box.SuspendLayout();
@@ -47,6 +49,7 @@ namespace Cliente
             this.lista_partidas_lsbx.Name = "lista_partidas_lsbx";
             this.lista_partidas_lsbx.Size = new System.Drawing.Size(528, 751);
             this.lista_partidas_lsbx.TabIndex = 0;
+            this.lista_partidas_lsbx.Enter += new System.EventHandler(this.lista_partidas_lsbx_Enter);
             // 
             // tableLayoutPanel1
             // 
@@ -65,6 +68,8 @@ namespace Cliente
             // 
             // btn_group_box
             // 
+            this.btn_group_box.Controls.Add(this.join_btn);
+            this.btn_group_box.Controls.Add(this.eliminar_partida_btn);
             this.btn_group_box.Controls.Add(this.crear_partida_btn);
             this.btn_group_box.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btn_group_box.Location = new System.Drawing.Point(537, 3);
@@ -72,6 +77,27 @@ namespace Cliente
             this.btn_group_box.Size = new System.Drawing.Size(40, 751);
             this.btn_group_box.TabIndex = 1;
             this.btn_group_box.TabStop = false;
+            // 
+            // join_btn
+            // 
+            this.join_btn.Location = new System.Drawing.Point(1, 93);
+            this.join_btn.Name = "join_btn";
+            this.join_btn.Size = new System.Drawing.Size(40, 40);
+            this.join_btn.TabIndex = 2;
+            this.join_btn.Text = "Join";
+            this.join_btn.UseVisualStyleBackColor = true;
+            this.join_btn.Click += new System.EventHandler(this.join_btn_Click);
+            // 
+            // eliminar_partida_btn
+            // 
+            this.eliminar_partida_btn.BackColor = System.Drawing.Color.Silver;
+            this.eliminar_partida_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
+            this.eliminar_partida_btn.Location = new System.Drawing.Point(0, 46);
+            this.eliminar_partida_btn.Name = "eliminar_partida_btn";
+            this.eliminar_partida_btn.Size = new System.Drawing.Size(40, 40);
+            this.eliminar_partida_btn.TabIndex = 1;
+            this.eliminar_partida_btn.Text = "-";
+            this.eliminar_partida_btn.UseVisualStyleBackColor = false;
             // 
             // crear_partida_btn
             // 
@@ -109,5 +135,7 @@ namespace Cliente
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.GroupBox btn_group_box;
         private System.Windows.Forms.Button crear_partida_btn;
+        private System.Windows.Forms.Button join_btn;
+        private System.Windows.Forms.Button eliminar_partida_btn;
     }
 }

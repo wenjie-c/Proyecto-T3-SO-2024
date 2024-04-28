@@ -25,8 +25,15 @@ Conectado lista[100];
 typedef struct{
 	int id_partida;
 	int id_chat;
-	int id_jugadores[2];
+	Conectado conectados[100];
+	int num_jugador;
 } partida;
+
+partida partidas[100];
+
+static const partida PARTIDA_VACIA; // Esta variable es util para destruir (vaciar) una partida, segun lo que he mirado en una pregunta de StackOverflow (https://stackoverflow.com/questions/6891720/initialize-reset-struct-to-zero-null) es la mejor manera.
+
+
 
 typedef struct{
 	int ids[64];
@@ -34,6 +41,25 @@ typedef struct{
 } listas; // Lista de partidas de un jugador
 
 // --- Funciones de base de datos ---
+
+int unirse_en_la_partida(int id_partida,Conectado *self,partida *mi_partida){
+	int err;
+	MYSQL_RES * resultado;
+	MYSQL_ROW row;
+	//Antes de unirnos en la partida tenemos que verificar si es que pertenecemos en la prtida o no.
+	// La comprobacion se implementara más tarde.
+	mi_partida->id_partida = id_partida;
+	mi_partida->id_chat = 0; // De momento no lo utilizamos.
+	//printf("Antes de unirse en la partida\n");
+	mi_partida->conectados[0] = *self;
+	
+	//memcpy((void *)mi_partida->conectados[0],(void*)self,sizeof(partida));
+	mi_partida->num_jugador = 1;
+	//printf("Despues de unirse en la partida\n");
+
+	return 0;
+
+}
 
 int crear_partida(int id_jugador){
 	int err;
@@ -178,7 +204,9 @@ void * AtenderCliente(void * temporal){
 	printf("\nSocket: %d", sock_cnx)	;
 	int err;	
 	MYSQL_RES *resultado;
-	MYSQL_ROW row;	
+	MYSQL_ROW row;
+	
+	partida partida_actual;
 	char peticion[512];
 	char respuesta[512];
 	char str_query[512];	
@@ -200,6 +228,14 @@ void * AtenderCliente(void * temporal){
 		{
 		case 0: 
 			terminar = 1;
+			if(partida_actual.id_partida != NULL){ // Comprobar si ya estabamos en una partida.
+				if(partidas[partida_actual.id_partida].num_jugador == 1){ // Comprobar si solo quedamos nosotros
+					partidas[partida_actual.id_partida] = PARTIDA_VACIA;
+				}
+				else{
+					partidas[partida_actual.id_partida].num_jugador -=1; // Le restamos un jugador.
+				}
+			}
 			break;
 		case 1: // Registro
 			
@@ -292,7 +328,24 @@ void * AtenderCliente(void * temporal){
 			break;
 		case 5: //Enviar mensajes
 			break;
-		case 6: // Consultar mensajes
+		case 6: // Unirse en la partida
+			printf("Peticion de unir en la partida.\n");
+			token = strtok(NULL,"/");
+
+			int res = unirse_en_la_partida(atoi(token),conectado,&partida_actual);
+
+			sprintf(respuesta,"6/%d",res);
+			if(res == 0){ // Comprobamos si se ha unido con exito
+				printf("El jugado %s con id %d se ha unido en la partida %d\n",conectado->nombre,conectado->id,partida_actual.id_partida);
+				partidas[partida_actual.id_partida] = partida_actual; // Creo que es mejor utilizar el id de la partida como indice del array.
+			}
+			else
+			{
+				printf("No ha sido posible unirse en la partida.\n");
+			}
+			sprintf(respuesta,"6/%d",res);
+			write(sock_cnx,respuesta,strlen(respuesta));
+
 			break;
 		default:
 			break;

@@ -47,7 +47,18 @@ namespace Cliente
                     case 4:
                         lista.add_partida(Convert.ToInt32(trozos[1]));
                         break;
-
+                    case 5:
+                        break;
+                    case 6:
+                        if(Convert.ToInt32(trozos[1]) == -1)
+                        {
+                            MessageBox.Show("No se ha podido unirse a la partida deseada!");
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Se ha podido unirse en la partida seleccionado.\nPartida.id = {lista.GetIdPartida()}");
+                        }
+                        break;
                        
 
                 }
