@@ -82,5 +82,17 @@ namespace Cliente
         {
             return Convert.ToInt32(this.lista_partidas_lsbx.SelectedItem);
         }
+
+        private void invitacion_btn_Click(object sender, EventArgs e)
+        {
+            Codigo_invitacion invitacion = new Codigo_invitacion();
+            invitacion.ShowDialog();
+            if(invitacion.codigo != String.Empty)
+            {
+                int id_partida = Convert.ToInt32(invitacion.codigo);
+                byte[] msg = Encoding.ASCII.GetBytes($"7/{invitacion.codigo}");
+                server.Send(msg);
+            }
+        }
     }
 }

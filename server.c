@@ -194,6 +194,7 @@ MYSQL * db_cnx;
 } args;
 */
 
+
 void * AtenderCliente(void * temporal){
 	int sock_cnx;
 	int *s;
@@ -346,6 +347,34 @@ void * AtenderCliente(void * temporal){
 			sprintf(respuesta,"6/%d",res);
 			write(sock_cnx,respuesta,strlen(respuesta));
 
+			break;
+
+			case 7:
+			printf("Peticion de unirse en una partida ajena.\n");
+			token = strtok(NULL,"/");
+			int id_partida = atoi(token);
+			if(partidas[id_partida].num_jugador == NULL || partidas[id_partida].num_jugador == 0){ // No hay jugador, no te puedes unirte en la partida
+			sprintf(respuesta,"7/-1");
+			write(sock_cnx,respuesta,strlen(respuesta));
+			}else{
+				// Pedir al jugador principal se invitado.
+				sprintf(respuesta,"8/%d",conectado->id);
+				write(partidas[id_partida].conectados[0].socket,respuesta,strlen(respuesta));
+
+				ret = read(sock_cnx,peticion,sizeof(peticion));
+				peticion[ret] = '\0';
+				printf(" %s\n",peticion);
+				int decision;
+				sscanf(peticion,"8/%d",&decision);
+				printf(" %d\n",decision);
+				if(decision == 0){ // Aceptado
+					
+					partidas[id_partida].conectados[partidas[id_partida].num_jugador] = *conectado;
+					partidas[id_partida].num_jugador += 1;
+				}
+				sprintf(respuesta,"7/%d",decision);
+				write(sock_cnx,respuesta,strlen(respuesta));
+			}
 			break;
 		default:
 			break;

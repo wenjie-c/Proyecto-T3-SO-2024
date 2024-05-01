@@ -198,3 +198,23 @@ Después de dar click en aceptar.
 Después de que el otro usuario haya aceptado.
 
 + El primer campo indica si el otro usuario ha aceptado o no.
+
+## Notificar que hay un jugador que se quiere unir a tu partida.
+
+Empieza con el comando 8:
+
+### En el server
+
+`8/id_jugador`
+
+Después de recibir la petición de ser invitado de otro jugador.
+
++ El único campo corresponde al id del otro jugador.
+
+### En el cliente
+
+`8/0`
+
+Después de aceptar o denegar al dialogo.
+
++ El único campo indica si el jugador ha aceptado (0) o no (-1) 

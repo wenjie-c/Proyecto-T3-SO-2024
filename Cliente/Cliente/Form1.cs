@@ -59,6 +59,16 @@ namespace Cliente
                             MessageBox.Show($"Se ha podido unirse en la partida seleccionado.\nPartida.id = {lista.GetIdPartida()}");
                         }
                         break;
+                    case 7:
+                        
+                        break;
+                    case 8:
+                        DialogResult result = MessageBox.Show($"Hay otro jugador con id:{trozos[1]} que quiere unirse a tu partida.", "Invitando a otro jugador.", MessageBoxButtons.YesNo);
+                        int decision = (result == DialogResult.Yes) ? 0 : -1;
+                        byte[] msg2 = System.Text.Encoding.ASCII.GetBytes($"8/{decision.ToString()}");
+                        server.Send(msg2);
+
+                        break;
                        
 
                 }
