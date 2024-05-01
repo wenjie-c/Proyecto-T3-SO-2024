@@ -353,12 +353,14 @@ void * AtenderCliente(void * temporal){
 			printf("Peticion de unirse en una partida ajena.\n");
 			token = strtok(NULL,"/");
 			int id_partida = atoi(token);
-			if(partidas[id_partida].num_jugador == NULL || partidas[id_partida].num_jugador == 0){ // No hay jugador, no te puedes unirte en la partida
+			if(partidas[id_partida].num_jugador == 0){ // No hay jugador, no te puedes unirte en la partida
 			sprintf(respuesta,"7/-1");
+			printf(respuesta);
 			write(sock_cnx,respuesta,strlen(respuesta));
 			}else{
 				// Pedir al jugador principal se invitado.
 				sprintf(respuesta,"8/%d",conectado->id);
+				printf("Preguntado: %s\n a %d", respuesta,partidas[id_partida].conectados[0].socket);
 				write(partidas[id_partida].conectados[0].socket,respuesta,strlen(respuesta));
 
 				ret = read(sock_cnx,peticion,sizeof(peticion));
@@ -415,10 +417,11 @@ int main(){
 	if (listen(sock_listen, 3) < 0) // Establecer la cola de espera de peticiones en tres.
 		printf("Error en el listen.");
 	
-	//int sockets[100];
-	//pthread_t thread[100];
-	//int sockets[100];
 	
+	for(int i = 0; i < 100; i++){ // Initializar las lista de partidas
+		partidas[i].num_jugador = 0;
+	}
+
 	/* Proceso de recoger y  generar las respuestas:
 	para ello se toma el modelo II.
 	*/

@@ -16,6 +16,7 @@ namespace Cliente
     {
         internal Socket server;
         internal int id_j;
+        public Codigo_invitacion invitacion;
         public lista_partidas()
         {
             InitializeComponent();
@@ -85,7 +86,7 @@ namespace Cliente
 
         private void invitacion_btn_Click(object sender, EventArgs e)
         {
-            Codigo_invitacion invitacion = new Codigo_invitacion();
+            invitacion = new Codigo_invitacion();
             invitacion.ShowDialog();
             if(invitacion.codigo != String.Empty)
             {

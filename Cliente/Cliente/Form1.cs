@@ -60,6 +60,14 @@ namespace Cliente
                         }
                         break;
                     case 7:
+                        if(Convert.ToInt32(trozos[1]) == 0)
+                        {
+                            MessageBox.Show($"Te has unido en la partida: {lista.invitacion.codigo}");
+                        }
+                        else
+                        {
+                            MessageBox.Show($"No has podido unirte en la prtida.");
+                        }
                         
                         break;
                     case 8:
