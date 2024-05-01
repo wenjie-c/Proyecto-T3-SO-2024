@@ -62,7 +62,7 @@ namespace Cliente
                     case 7:
                         if(Convert.ToInt32(trozos[1]) == 0)
                         {
-                            MessageBox.Show($"Te has unido en la partida: {lista.invitacion.codigo}");
+                            MessageBox.Show($"Te has unido en la partida: {lista.invitacion.codigo}, invitacion con exito.");
                         }
                         else
                         {

@@ -9,7 +9,7 @@
 
 
 MYSQL * db_cnx; // Mejor declararlo como variable global.ç
-
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 char consulta [80];
 
 int partidas_ganadas;
@@ -65,9 +65,8 @@ int crear_partida(int id_jugador){
 	int err;
 	MYSQL_RES * resultado;
 	MYSQL_ROW ultimo_id;
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	
-	
+	pthread_mutex_lock(&mutex);
 	// No se si crear quiero añadir el chat teniendo en cuenta de que en futuro lo podriamos quitarlo como base de datos.
 	//Creamos una entrada para la tabla de Partida
 	err = mysql_query(db_cnx, "INSERT INTO Partida (chat_id) VALUES (NULL);");
@@ -102,7 +101,6 @@ int crear_partida(int id_jugador){
 listas listar_partidas(MYSQL * cnx, int id_j){ // Devuelve la lista de ids de partidas.
 	MYSQL_RES * resultados;
 	MYSQL_ROW row;
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	listas res;
 	char comando[300];
 	sprintf(comando, "SELECT id_p FROM Nucleo WHERE id_j=%d ", id_j); //Obtener todas las partidas del jugador
@@ -131,7 +129,6 @@ listas listar_partidas(MYSQL * cnx, int id_j){ // Devuelve la lista de ids de pa
 int login(MYSQL * cnx,char * Nombre, char * password){ // Devuelve el id del primer usuario con ese nombre y esa contraseña
 	MYSQL_RES * resultados;
 	MYSQL_ROW row;
-	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 	char comando[300];
 	sprintf(comando, "SELECT id FROM Jugador WHERE Nombre='%s' AND pass='%s'", Nombre, password);
 	pthread_mutex_lock(&mutex);
@@ -353,30 +350,52 @@ void * AtenderCliente(void * temporal){
 			printf("Peticion de unirse en una partida ajena.\n");
 			token = strtok(NULL,"/");
 			int id_partida = atoi(token);
+			pthread_mutex_lock(&mutex);
 			if(partidas[id_partida].num_jugador == 0){ // No hay jugador, no te puedes unirte en la partida
 			sprintf(respuesta,"7/-1");
-			printf(respuesta);
+			printf("%s",respuesta);
 			write(sock_cnx,respuesta,strlen(respuesta));
+			pthread_mutex_unlock(&mutex);
 			}else{
 				// Pedir al jugador principal se invitado.
+				
 				sprintf(respuesta,"8/%d",conectado->id);
-				printf("Preguntado: %s\n a %d", respuesta,partidas[id_partida].conectados[0].socket);
+				printf("Preguntado: %s a %d\n", respuesta,partidas[id_partida].conectados[0].id);
 				write(partidas[id_partida].conectados[0].socket,respuesta,strlen(respuesta));
-
+				/*
 				ret = read(sock_cnx,peticion,sizeof(peticion));
 				peticion[ret] = '\0';
-				printf(" %s\n",peticion);
+				printf("Nos ha llegado la respuesta: %s\n",peticion);
 				int decision;
 				sscanf(peticion,"8/%d",&decision);
-				printf(" %d\n",decision);
+				*/
+				/*
+				token = strtok(peticion,'/');
+				token = strtok(NULL,'/');
+				decision = atoi(token);*/
+				
+				while(consulta[0] == '\0'); // Esperamos, esto literalmente es programacion asincrona.
+				int decision;
+				sscanf(consulta,"8/%d",&decision);
+				consulta[0] = '\0';
+
+				printf(" Ha decidido: %d\n",decision);
 				if(decision == 0){ // Aceptado
-					
+					printf("El jugador %d ha aceptado que el jugador %d se una a la partida %d\n",respuesta,partidas[id_partida].conectados[0].id,conectado->id,id_partida);
 					partidas[id_partida].conectados[partidas[id_partida].num_jugador] = *conectado;
 					partidas[id_partida].num_jugador += 1;
+					partida partida_actual = partidas[id_partida];
 				}
+				pthread_mutex_unlock(&mutex);
 				sprintf(respuesta,"7/%d",decision);
+				printf("%s\n",respuesta);
 				write(sock_cnx,respuesta,strlen(respuesta));
+				
+				
 			}
+			break;
+			case 8:
+			sprintf(consulta,"%s",peticion); //Redirigir la peticion al otro hilo
 			break;
 		default:
 			break;
@@ -389,7 +408,7 @@ void * AtenderCliente(void * temporal){
 
 int main(){
 	
-	
+	consulta[0] = '\0';
 	//MYSQL * 
 	db_cnx = init();
 	
