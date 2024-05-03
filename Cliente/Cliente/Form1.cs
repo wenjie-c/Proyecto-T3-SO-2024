@@ -57,6 +57,8 @@ namespace Cliente
                         else
                         {
                             MessageBox.Show($"Se ha podido unirse en la partida seleccionado.\nPartida.id = {lista.GetIdPartida()}");
+                            lista.Close();
+                            
                         }
                         break;
                     case 7:
@@ -67,6 +69,7 @@ namespace Cliente
                         else
                         {
                             MessageBox.Show($"No has podido unirte en la prtida.");
+                            this.Jugar(lista.GetIdPartida());
                         }
                         
                         break;
@@ -201,6 +204,13 @@ namespace Cliente
             lista.server = this.server;
             lista.id_j = int.Parse(this.id_jugador.ToString());
             lista.Show();
+        }
+
+        private void Jugar(int id_partida)
+        {
+            Juego partida = new Juego();
+            partida.id_partida = id_partida;
+            partida.ShowDialog();
         }
     }
 }
