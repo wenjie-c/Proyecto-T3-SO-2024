@@ -32,10 +32,10 @@ namespace Cliente
             this.lista_partidas_lsbx = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btn_group_box = new System.Windows.Forms.GroupBox();
+            this.invitacion_btn = new System.Windows.Forms.Button();
             this.join_btn = new System.Windows.Forms.Button();
             this.eliminar_partida_btn = new System.Windows.Forms.Button();
             this.crear_partida_btn = new System.Windows.Forms.Button();
-            this.invitacion_btn = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.btn_group_box.SuspendLayout();
             this.SuspendLayout();
@@ -80,6 +80,17 @@ namespace Cliente
             this.btn_group_box.TabIndex = 1;
             this.btn_group_box.TabStop = false;
             // 
+            // invitacion_btn
+            // 
+            this.invitacion_btn.BackColor = System.Drawing.Color.Silver;
+            this.invitacion_btn.Location = new System.Drawing.Point(0, 139);
+            this.invitacion_btn.Name = "invitacion_btn";
+            this.invitacion_btn.Size = new System.Drawing.Size(40, 40);
+            this.invitacion_btn.TabIndex = 3;
+            this.invitacion_btn.Text = "Join other";
+            this.invitacion_btn.UseVisualStyleBackColor = false;
+            this.invitacion_btn.Click += new System.EventHandler(this.invitacion_btn_Click);
+            // 
             // join_btn
             // 
             this.join_btn.BackColor = System.Drawing.Color.Silver;
@@ -114,17 +125,6 @@ namespace Cliente
             this.crear_partida_btn.Text = "+";
             this.crear_partida_btn.UseVisualStyleBackColor = false;
             this.crear_partida_btn.Click += new System.EventHandler(this.crear_partida_btn_Click);
-            // 
-            // invitacion_btn
-            // 
-            this.invitacion_btn.BackColor = System.Drawing.Color.Silver;
-            this.invitacion_btn.Location = new System.Drawing.Point(0, 139);
-            this.invitacion_btn.Name = "invitacion_btn";
-            this.invitacion_btn.Size = new System.Drawing.Size(40, 40);
-            this.invitacion_btn.TabIndex = 3;
-            this.invitacion_btn.Text = "Join other";
-            this.invitacion_btn.UseVisualStyleBackColor = false;
-            this.invitacion_btn.Click += new System.EventHandler(this.invitacion_btn_Click);
             // 
             // lista_partidas
             // 

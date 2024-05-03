@@ -16,6 +16,10 @@ namespace Cliente
     public partial class Form1 : Form
     {
 
+        delegate void EntreHilos(string argumento); //Delegado para todas las funciones.
+        delegate int devolverID(); // Delegado para funciones que devuelvan enteros
+        delegate DialogResult dialogosentrehilos(); 
+
         Thread atender;
         private void AtenderServidor()
         {
@@ -33,7 +37,8 @@ namespace Cliente
                         MessageBox.Show("Tu id de jugador es: " + trozos[1]);
                         if (trozos[1] != "-1")
                         {
-                            play_btn.Enabled = true;
+                            //play_btn.Enabled = true;
+                            play_btn.Invoke(new Action(enable_play_btn));
                         }
                         break;
                     case 3:
@@ -42,7 +47,9 @@ namespace Cliente
                         {
                             mensaje[i-1] = trozos[i];
                         }
-                        lista.parsing_server(mensaje);
+                        //lista.parsing_server(string.Join("/",mensaje));
+
+                        lista.Invoke(new EntreHilos(lista.parsing_server), string.Join("/", mensaje));
                         break;
                     case 4:
                         lista.add_partida(Convert.ToInt32(trozos[1]));
@@ -57,19 +64,25 @@ namespace Cliente
                         else
                         {
                             MessageBox.Show($"Se ha podido unirse en la partida seleccionado.\nPartida.id = {lista.GetIdPartida()}");
-                            lista.Close();
-                            
+                            //lista.Close();
+                            lista.Invoke(new Action(lista.Close));
                         }
                         break;
                     case 7:
                         if(Convert.ToInt32(trozos[1]) == 0)
                         {
-                            MessageBox.Show($"Te has unido en la partida: {lista.invitacion.codigo}, invitacion con exito.");
+                            int id_partida = (int)lista.Invoke(new devolverID(lista.GetIdPartida));
+                            MessageBox.Show($"Te has unido en la partida: {id_partida}, invitacion con exito.");
+
+                            
+                            //this.Invoke(new Action<int>(Jugar), id_partida);
+
+                            
                         }
                         else
                         {
                             MessageBox.Show($"No has podido unirte en la prtida.");
-                            this.Jugar(lista.GetIdPartida());
+                            //this.Jugar(lista.GetIdPartida());
                         }
                         
                         break;
@@ -96,7 +109,7 @@ namespace Cliente
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            CheckForIllegalCrossThreadCalls = false;
+            //CheckForIllegalCrossThreadCalls = false;
         }
 
         private void login_btn_Click(object sender, EventArgs e)
@@ -198,18 +211,37 @@ namespace Cliente
             }
         }
 
+        public void enable_play_btn()
+        {
+            this.play_btn.Enabled = true;
+        }
+
+        private void change_play_btn(object sender, FormClosedEventArgs e)
+        {
+            if (play_btn.Text == "Listar") play_btn.Text = "Play";
+            else play_btn.Text = "Listar";
+        }
+
         private void play_btn_Click(object sender, EventArgs e)
         {
-            lista = new lista_partidas();
-            lista.server = this.server;
-            lista.id_j = int.Parse(this.id_jugador.ToString());
-            lista.Show();
+            if (play_btn.Text == "Listar") {
+                lista = new lista_partidas();
+                lista.server = this.server;
+                lista.id_j = int.Parse(this.id_jugador.ToString());
+                lista.FormClosed += new FormClosedEventHandler(change_play_btn);
+                lista.ShowDialog(); 
+            }
+            else
+            {
+                Jugar(lista.GetIdPartida());
+            }
         }
 
         private void Jugar(int id_partida)
         {
             Juego partida = new Juego();
             partida.id_partida = id_partida;
+            //partida.ShowDialog();
             partida.ShowDialog();
         }
     }

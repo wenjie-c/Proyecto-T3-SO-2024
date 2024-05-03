@@ -16,6 +16,7 @@ namespace Cliente
     {
         internal Socket server;
         internal int id_j;
+        public int partida_seleccionada;
         public Codigo_invitacion invitacion;
         public lista_partidas()
         {
@@ -30,9 +31,9 @@ namespace Cliente
             server.Send(msg);
             
         }
-        public void parsing_server(string[] total)
+        public void parsing_server(string argumentos)
         {
-            
+            string[] total = argumentos.Split('/');
             if (int.Parse(total[0]) != 0)
             {
                 lista_partidas_lsbx.Items.Clear();
@@ -74,6 +75,7 @@ namespace Cliente
             else
             {
                 var id_partida = lista_partidas_lsbx.SelectedItem.ToString();
+                this.partida_seleccionada = Convert.ToInt32(lista_partidas_lsbx.SelectedItem);
                 string mensaje = $"6/{id_partida}";
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
@@ -81,7 +83,7 @@ namespace Cliente
         }
         public int GetIdPartida()
         {
-            return Convert.ToInt32(this.lista_partidas_lsbx.SelectedItem);
+            return partida_seleccionada;
         }
 
         private void invitacion_btn_Click(object sender, EventArgs e)

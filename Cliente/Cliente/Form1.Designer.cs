@@ -150,7 +150,7 @@ namespace Cliente
             this.play_btn.Name = "play_btn";
             this.play_btn.Size = new System.Drawing.Size(101, 28);
             this.play_btn.TabIndex = 7;
-            this.play_btn.Text = "Play";
+            this.play_btn.Text = "Listar";
             this.play_btn.UseVisualStyleBackColor = true;
             this.play_btn.Click += new System.EventHandler(this.play_btn_Click);
             // 
