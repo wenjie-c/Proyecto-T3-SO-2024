@@ -218,6 +218,7 @@ namespace Cliente
 
         private void change_play_btn(object sender, FormClosedEventArgs e)
         {
+            if (lista.GetIdPartida() == -1) return; // No se ha seleccionado ninguna partida.
             if (play_btn.Text == "Listar") play_btn.Text = "Play";
             else play_btn.Text = "Listar";
         }

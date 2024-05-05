@@ -31,12 +31,15 @@ namespace Cliente
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.barra_estado = new System.Windows.Forms.StatusStrip();
+            this.gameControl1 = new Cliente.GameControl();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.gameControl1, 0, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
@@ -54,6 +57,16 @@ namespace Cliente
             this.barra_estado.TabIndex = 1;
             this.barra_estado.Text = "Barra de estado";
             // 
+            // gameControl1
+            // 
+            this.gameControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gameControl1.Location = new System.Drawing.Point(3, 3);
+            this.gameControl1.MouseHoverUpdatesOnly = false;
+            this.gameControl1.Name = "gameControl1";
+            this.gameControl1.Size = new System.Drawing.Size(794, 594);
+            this.gameControl1.TabIndex = 0;
+            this.gameControl1.Text = "gameControl1";
+            // 
             // Juego
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -64,6 +77,7 @@ namespace Cliente
             this.Name = "Juego";
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.Juego_Load);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -73,5 +87,6 @@ namespace Cliente
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.StatusStrip barra_estado;
+        private GameControl gameControl1;
     }
 }

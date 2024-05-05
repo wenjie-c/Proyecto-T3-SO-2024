@@ -16,7 +16,7 @@ namespace Cliente
     {
         internal Socket server;
         internal int id_j;
-        public int partida_seleccionada;
+        public int partida_seleccionada = -1;
         public Codigo_invitacion invitacion;
         public lista_partidas()
         {
@@ -75,6 +75,7 @@ namespace Cliente
             else
             {
                 var id_partida = lista_partidas_lsbx.SelectedItem.ToString();
+                partida_seleccionada = Convert.ToInt32(id_partida);
                 this.partida_seleccionada = Convert.ToInt32(lista_partidas_lsbx.SelectedItem);
                 string mensaje = $"6/{id_partida}";
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
