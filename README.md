@@ -56,10 +56,10 @@ Client ->> Server: "7/30"
 Note left of Client : 7 es el comando para entrar en una partida , seguido del id de la partida.
 
 loop Bucle de partida
-Client ->> Server : "8/1/coordenadaX,coordenadaY"
-Note left of Client : 8 es el comando para dar a conocer a los otros usuarios tus coordenadas, le sigue un subcomando.
-Server -->> Client : "8/1/JugadorB,coordenadaX,coordenadaY"
-Note right of Server : 8 es el comando para actualizar la partida, le sigue el números de jugadores a aprte de ti y después viene el nombre y las coordenadas. El 0 esta reservado.
+Client ->> Server : "9/1/coordenadaX,coordenadaY"
+Note left of Client : 9 es el comando para dar a conocer a los otros usuarios tus coordenadas, le sigue un subcomando.
+Server -->> Client : "9/1/JugadorB,coordenadaX,coordenadaY"
+Note right of Server : 9 es el comando para actualizar la partida, le sigue el números de jugadores a aprte de ti y después viene el nombre y las coordenadas. El 0 esta reservado.
 
 alt Hay un mensaje nuevo.
 Server -->> Client : 5/JugadorB:Hola!
@@ -218,3 +218,23 @@ Después de recibir la petición de ser invitado de otro jugador.
 Después de aceptar o denegar al dialogo.
 
 + El único campo indica si el jugador ha aceptado (0) o no (-1) 
+
+## Actualización de jugadores en la partida.
+
+Empieza con el comando 9 :
+
+### En el cliente
+
+`9/<id_del_jugador>:<coordenada_X>;<coordenada_Y>`
+
+Por cada ciclo del juego.
+
++ El parámetro principal es el nombre del jugador, dos puntos y sus coordenadas.
++ Pueden haber otros parámetros opcionales.
+
+### En el server
+
+``9/<id_del_jugador>:<coordenada_X>;<coordenada_Y>``
+
+Redireccion de las peticiones de los jugadores.
+
