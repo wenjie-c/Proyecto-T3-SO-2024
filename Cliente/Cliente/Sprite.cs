@@ -67,6 +67,8 @@ namespace Cliente
 
         public string[] raycastinglogs;
 
+        internal GameControl partida;
+        
         public Player(int x, int y, SpriteBatch spriteBatch) : base(x, y, new Rectangle(x, y, 64, 64))
         {
 
@@ -377,24 +379,27 @@ namespace Cliente
             }
         }
 
-        /*
+        
         public void DrawMap(int[,] map, int[] screensize)
         {
-            surface.DrawRectangle(0, 0, 320, 320, Color.Black, thickness: 320);
+            //surface.DrawRectangle(0, 0, 320, 320, Color.Black, thickness: 320);
+            partida.DrawRectangle(new Rectangle(0, 0, 320, 320),Color.Black);
             int indice = CELLSIZE / 2;
             for (int row = 0; row < map.GetLength(0); row++) // Rows
             {
                 for (int column = 0; column < map.GetLength(1); column++) // Columns
                 {
                     int square = row * 64 + column; // Calcular el square index
-                    surface.DrawRectangle(new Rectangle(column * indice, row * indice, indice - 1, indice - 1), map[row, column] > 0 ? Color.White : Color.SkyBlue, thickness: indice - 2); // Se restan uno al ancho y el alto para que aparezcan las lineas de la cuadricula. El grosor hay que restarle 2.
+                    //surface.DrawRectangle(new Rectangle(column * indice, row * indice, indice - 1, indice - 1), map[row, column] > 0 ? Color.White : Color.SkyBlue, thickness: indice - 2); // Se restan uno al ancho y el alto para que aparezcan las lineas de la cuadricula. El grosor hay que restarle 2.
+                    partida.DrawRectangle(new Rectangle(column * indice, row * indice, indice - 1, indice - 1), map[row, column] > 0 ? Color.White : Color.SkyBlue);
 
                 }
 
             }
-            surface.DrawCircle(position.X / CELLSIZE * indice, position.Y / CELLSIZE * indice, 8, 100, Color.Red, thickness: 8);
-            surface.DrawLine(position.X / CELLSIZE * indice, position.Y / CELLSIZE * indice, (float)((position.X / CELLSIZE * indice + Math.Cos(this.player_angle) * indice)), (float)((position.Y / CELLSIZE * indice + Math.Sin(player_angle) * indice)), Color.Yellow, thickness: 4);
+            //surface.DrawCircle(position.X / CELLSIZE * indice, position.Y / CELLSIZE * indice, 8, 100, Color.Red, thickness: 8);
+            partida.DrawRectangle(new Rectangle((int)position.X / CELLSIZE * indice, (int)position.Y / CELLSIZE * indice, 8, 8),Color.Red);
+            //surface.DrawLine(position.X / CELLSIZE * indice, position.Y / CELLSIZE * indice, (float)((position.X / CELLSIZE * indice + Math.Cos(this.player_angle) * indice)), (float)((position.Y / CELLSIZE * indice + Math.Sin(player_angle) * indice)), Color.Yellow, thickness: 4);
         }
-        */
+        
     }
 }
