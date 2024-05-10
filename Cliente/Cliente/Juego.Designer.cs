@@ -30,8 +30,8 @@ namespace Cliente
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.barra_estado = new System.Windows.Forms.StatusStrip();
             this.gameControl1 = new Cliente.GameControl();
+            this.barra_estado = new System.Windows.Forms.StatusStrip();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,19 +43,11 @@ namespace Cliente
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 600F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 606F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(800, 758);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(806, 758);
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
-            // 
-            // barra_estado
-            // 
-            this.barra_estado.Location = new System.Drawing.Point(0, 761);
-            this.barra_estado.Name = "barra_estado";
-            this.barra_estado.Size = new System.Drawing.Size(800, 22);
-            this.barra_estado.TabIndex = 1;
-            this.barra_estado.Text = "Barra de estado";
             // 
             // gameControl1
             // 
@@ -63,15 +55,23 @@ namespace Cliente
             this.gameControl1.Location = new System.Drawing.Point(3, 3);
             this.gameControl1.MouseHoverUpdatesOnly = false;
             this.gameControl1.Name = "gameControl1";
-            this.gameControl1.Size = new System.Drawing.Size(794, 594);
+            this.gameControl1.Size = new System.Drawing.Size(800, 600);
             this.gameControl1.TabIndex = 0;
             this.gameControl1.Text = "gameControl1";
+            // 
+            // barra_estado
+            // 
+            this.barra_estado.Location = new System.Drawing.Point(0, 761);
+            this.barra_estado.Name = "barra_estado";
+            this.barra_estado.Size = new System.Drawing.Size(806, 22);
+            this.barra_estado.TabIndex = 1;
+            this.barra_estado.Text = "Barra de estado";
             // 
             // Juego
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 783);
+            this.ClientSize = new System.Drawing.Size(806, 783);
             this.Controls.Add(this.barra_estado);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "Juego";
