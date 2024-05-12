@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoGame.Forms.Controls;
 using MonoGame;
+using System.IO;
 
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Color = Microsoft.Xna.Framework.Color;
@@ -37,6 +38,8 @@ namespace Cliente
         { 1,1,1,1,1,1,1,1,1,1}
         };
 
+        Other JugadorB;
+
         protected override void Initialize() {
 
             base.Initialize();
@@ -49,10 +52,20 @@ namespace Cliente
             players[0].HeightTexture = SliceView();
             players[0].raycastinglogs = new string[ScreenSize[0]];
             players[0].partida = this;
+
+            CrearJugadorB();
         }
         
         protected override void Update(GameTime gameTime) {
 
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                using (var file = new StreamWriter("player.log", false))
+                {
+                    file.Write(string.Join("\n", players[0].raycastinglogs));
+                }
+                
+            }
             players[0].Update(gameTime,map);
         
         }
@@ -63,7 +76,7 @@ namespace Cliente
             //DrawRectangle(new Rectangle(400, 300, 100, 100), Color.Green);
             //DrawRectangle(player.hitbox, Color.Red);
             DrawRectangle(new Rectangle(0, ScreenSize[1] / 2, ScreenSize[0], ScreenSize[1]), Color.DarkKhaki);
-            players[0].Draw(map,ScreenSize);
+            players[0].Draw(map,ScreenSize,JugadorB);
             if (players[0].raycastflag) players[0].DrawMap(map, ScreenSize);
             
             Editor.spriteBatch.End();
@@ -113,5 +126,11 @@ namespace Cliente
         }
         // --- Fin de funciones de soporte para monogame ---
 
+        // --- Funciones para interactual con otros hilos ---
+        public void CrearJugadorB()
+        {
+            JugadorB = new Other(320, 320,Editor.Content.Load<Texture2D>("fran"));
+        }
+        // --- Fin de las Funciones para interactual con otros hilos ---
     }
 }

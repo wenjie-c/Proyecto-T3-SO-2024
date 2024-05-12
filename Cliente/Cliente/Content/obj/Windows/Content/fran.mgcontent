@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/Users/wenji/Documents/shared/Proyecto-T3-SO-2024/Cliente/Cliente/Content/madera3.png</SourceFile>
-  <SourceTime>2024-05-07T21:26:43.5288186+02:00</SourceTime>
-  <DestFile>C:/Users/wenji/Documents/shared/Proyecto-T3-SO-2024/Cliente/Cliente/Content/bin/Windows/madera3.xnb</DestFile>
-  <DestTime>2024-05-12T17:26:48.0175259+02:00</DestTime>
+  <SourceFile>C:/Users/wenji/Documents/shared/Proyecto-T3-SO-2024/Cliente/Cliente/Content/fran.png</SourceFile>
+  <SourceTime>2024-05-12T17:21:11.1224488+02:00</SourceTime>
+  <DestFile>C:/Users/wenji/Documents/shared/Proyecto-T3-SO-2024/Cliente/Cliente/Content/bin/Windows/Content/fran.xnb</DestFile>
+  <DestTime>2024-05-12T17:42:22.3369346+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2018-12-08T17:35:54+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

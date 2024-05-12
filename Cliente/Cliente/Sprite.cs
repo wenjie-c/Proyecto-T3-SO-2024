@@ -15,6 +15,11 @@ using Keys = Microsoft.Xna.Framework.Input.Keys;
 
 namespace Cliente
 {
+    internal struct sprite_found // Cuando el rayo colisiona con otro sprite
+    {
+        internal Other otro;
+        internal double distance;
+    }
     internal struct ray_casted
     {
         internal bool has_intersection;
@@ -23,6 +28,8 @@ namespace Cliente
         internal int texX; // Coordenada x en la textura
         internal double offsetX;
         internal double offsetY;
+        internal bool sprite_found_flag;
+        internal sprite_found sprite;
     }
     internal class Sprite
     {
@@ -180,17 +187,20 @@ namespace Cliente
                 return (Math.PI * 2) + (Math.Floor(Math.Abs(angulo) / (Math.PI * 2)) * (Math.PI * 2) + angulo);
             }
         }
-        ray_casted cast_ray(double angulo, int[,] map, int[] screensize)
+        ray_casted cast_ray(double angulo, int[,] map, int[] screensize, Other sprite)
         {
             double direction = normalizar_angulos(angulo);
             bool looks_up = !(0 < direction && direction < Math.PI);
             bool looks_right = !(Math.PI / 2 < direction && direction < 3 * Math.PI / 2);
+
+            bool spriteflag = false;
 
             var ROV = 10; // Profundidad
 
             double tan = Math.Tan(direction);
 
             ray_casted res = new ray_casted();
+            res.sprite_found_flag = false;
 
             int texX = 0;
             double offsetX = 0;
@@ -226,6 +236,20 @@ namespace Cliente
                     {
                         break;
                     }
+
+                    if (!(sprite is null) && !spriteflag) // Ha colisionado con un sprite
+                    {
+                        int[] coordenadas = sprite.GetCoordenadas();
+                        if (ix == coordenadas[0] && iy == coordenadas[1])
+                        {
+                            sprite_found encontrado = new sprite_found() { otro = sprite, distance = Math.Sqrt(Math.Pow(current_x - this.position.X, 2) + Math.Pow(current_y - this.position.Y, 2)) };
+                            res.sprite = encontrado;
+                            spriteflag = true;
+                            res.sprite_found_flag = true;
+                        }
+
+                    }
+
                     if (map[iy, ix] > 0) // Interseccion con pared
                     {
                         has_horizontal_intersection = true;
@@ -271,6 +295,19 @@ namespace Cliente
                     if (ix < 0 || iy < 0 || ix > map.GetLength(1) - 1 || iy > map.GetLength(0) - 1)
                     {
                         break;
+                    }
+
+                    if(!(sprite is null) && !spriteflag) // Ha colisionado con un sprite
+                    {
+                        int[] coordenadas = sprite.GetCoordenadas();
+                        if(ix == coordenadas[0] && iy == coordenadas[1] )
+                        {
+                            sprite_found encontrado = new sprite_found() { otro = sprite, distance = Math.Sqrt(Math.Pow(current_x - position.X, 2) + Math.Pow(current_y - position.Y, 2)) };
+                            res.sprite = encontrado;
+                            spriteflag = true;
+                            res.sprite_found_flag = true;
+                        }
+                        
                     }
 
                     if (map[iy, ix] > 0)
@@ -335,7 +372,7 @@ namespace Cliente
             return res;
         }
 
-        public void Draw(int[,] map, int[] screensize) // Sin textura
+        public void Draw(int[,] map, int[] screensize, Other other) // Con textura
         {
             int altura_media = screensize[1] / 2;
             double d = (CELLSIZE / 2) / Math.Tan(fov / 2);
@@ -346,11 +383,14 @@ namespace Cliente
             double current_angle = player_angle - fov / 2;
             double step = fov / (screensize[0] - 1);
 
+            bool found = false;
+            sprite_found found2 = new sprite_found();
+            int offsetX2 = 0;
 
             for (int i = 0; i < screensize[0]; i++)
             {
 
-                ray_casted casted = cast_ray(current_angle, map, screensize);
+                ray_casted casted = cast_ray(current_angle, map, screensize, other);
                 double h2 = (casted.distance / d) * (CELLSIZE / 2);
                 if (h2 != 0)
                 {
@@ -365,17 +405,36 @@ namespace Cliente
 
                     raycastinglogs[i] = $"Columna numero: {i.ToString()}, angulo actual: {current_angle.ToString()}, Tangente: {Math.Tan(current_angle)}; distancia de la colision: {casted.distance}, altura computado: {half_line_legth * 2}, posicion offset de la textura : {casted.texX}, offsetX : {casted.offsetX}, offsetY : {casted.offsetY}";
 
+                    if (casted.sprite_found_flag && !found) // Comrpobar si hemos encontrado con el sprite por primera vez
+                    {
+                        found2 = casted.sprite;
+                        offsetX2 = i;
+                        found = true;
+                    }
+                    
                     if (casted.has_intersection) // Dibujamos
                     {
                         Color color = casted.is_horizontal_the_nearest ? inicial : final;
 
                         //surface.DrawLine(i, (float)(altura_media + half_line_legth), i, (float)(altura_media - half_line_legth), color);
                         surface.Draw(paredes, HeightTexture[i], SourceTexture[i], color);
+
+                        
                         //Console.WriteLine($"Se ha dibujado la altura:");
                     }
                     current_angle += step;
                 }
+                
 
+            }
+            if (found)
+            {
+                
+                double line_ratio2 = (CELLSIZE / 2) / ((found2.distance / d) * (CELLSIZE / 2));
+                int altura = Convert.ToInt32(line_ratio2 * altura_media * 2);
+                Console.WriteLine($"JugadorB encontrado! Con altura: {altura}");
+                surface.Draw(found2.otro.textura, new Rectangle(offsetX2, (int)(altura_media - line_ratio2 * altura_media), altura , altura), Color.White);
+                found = false;
             }
         }
 
@@ -401,5 +460,22 @@ namespace Cliente
             //surface.DrawLine(position.X / CELLSIZE * indice, position.Y / CELLSIZE * indice, (float)((position.X / CELLSIZE * indice + Math.Cos(this.player_angle) * indice)), (float)((position.Y / CELLSIZE * indice + Math.Sin(player_angle) * indice)), Color.Yellow, thickness: 4);
         }
         
+    }
+
+    internal class Other : Sprite
+    {
+        internal Texture2D textura;
+        internal int CELLSIZE = 64;
+        public Other(int x, int y, Texture2D textura) : base(x, y, new Rectangle(x, y, 64, 64))
+        {
+
+
+            this.textura = textura;
+        }
+
+        public int[] GetCoordenadas()
+        {
+            return new int[] { (int)Math.Floor(this.position.X / CELLSIZE), (int)Math.Floor(this.position.Y / CELLSIZE) };
+        }
     }
 }
