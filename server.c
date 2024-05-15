@@ -191,6 +191,15 @@ MYSQL * db_cnx;
 } args;
 */
 
+void Broadcast(Conectado * yo, int id_partida, char * mensaje){ // Reenviar a todas los sockets de la partida excepto la nuestra.
+	for(int x = 0;  x < partidas[id_partida].num_jugador; x++){
+		if(partidas[id_partida].conectados[x].socket != yo->socket){
+			printf("Enviando: %s al socket %d\n", mensaje, partidas[id_partida].conectados[x].socket );
+			write(partidas[id_partida].conectados[x].socket, mensaje, strlen(mensaje));
+		}
+	}
+}
+
 
 void * AtenderCliente(void * temporal){
 	int sock_cnx;
@@ -216,6 +225,7 @@ void * AtenderCliente(void * temporal){
 		
 		peticion[ret] = '\0';
 		printf(" %s\n",peticion);
+		strcpy(respuesta,peticion);
 		
 		int tipo;
 		char * token;
@@ -397,6 +407,9 @@ void * AtenderCliente(void * temporal){
 			case 8:
 			sprintf(consulta,"%s",peticion); //Redirigir la peticion al otro hilo
 			break;
+			case 9:
+			//sprintf(respuesta,"%s",peticion);
+			Broadcast(conectado,partida_actual.id_partida, respuesta);
 		default:
 			break;
 		}

@@ -31,5 +31,35 @@ namespace Cliente
         {
 
         }
+
+        private void gameControl1_Click(object sender, EventArgs e)
+        {
+
+        }
+        // --- Funciones para GameControl ---
+        internal void CrearJugadorB()
+        {
+            gameControl1.CrearJugadorB();
+        }
+
+        internal void DisableGameControl()
+        {
+            gameControl1.Enabled = false;
+        }
+        internal void SetSocket(Socket server)
+        {
+            gameControl1.server = server;
+        }
+        internal void UpdateControl(string coordenadas)
+        {
+            string[] partes = coordenadas.Split(':');
+            string[] posicion = partes[1].Split(';');
+            double posX, posY;
+            posX = Convert.ToDouble(posicion[0]);
+            posY = Convert.ToDouble(posicion[1]);
+            gameControl1.UpdateJugadorB(posX, posY);
+        }
+        // --- Fin de funciones para GameControl ---
+
     }
 }

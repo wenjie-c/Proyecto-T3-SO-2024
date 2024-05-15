@@ -30,8 +30,8 @@ namespace Cliente
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.gameControl1 = new Cliente.GameControl();
             this.barra_estado = new System.Windows.Forms.StatusStrip();
+            this.gameControl1 = new Cliente.GameControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,6 +49,14 @@ namespace Cliente
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
+            // barra_estado
+            // 
+            this.barra_estado.Location = new System.Drawing.Point(0, 761);
+            this.barra_estado.Name = "barra_estado";
+            this.barra_estado.Size = new System.Drawing.Size(806, 22);
+            this.barra_estado.TabIndex = 1;
+            this.barra_estado.Text = "Barra de estado";
+            // 
             // gameControl1
             // 
             this.gameControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -58,14 +66,7 @@ namespace Cliente
             this.gameControl1.Size = new System.Drawing.Size(800, 600);
             this.gameControl1.TabIndex = 0;
             this.gameControl1.Text = "gameControl1";
-            // 
-            // barra_estado
-            // 
-            this.barra_estado.Location = new System.Drawing.Point(0, 761);
-            this.barra_estado.Name = "barra_estado";
-            this.barra_estado.Size = new System.Drawing.Size(806, 22);
-            this.barra_estado.TabIndex = 1;
-            this.barra_estado.Text = "Barra de estado";
+            this.gameControl1.Click += new System.EventHandler(this.gameControl1_Click);
             // 
             // Juego
             // 

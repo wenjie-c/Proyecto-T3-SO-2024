@@ -55,6 +55,7 @@ namespace Cliente
         public virtual void Draw(SpriteBatch spriteBatch)
         {
         }
+         
     }
 
     internal class Player : Sprite
@@ -73,8 +74,9 @@ namespace Cliente
         public Rectangle[] HeightTexture;
 
         public string[] raycastinglogs;
+        public GraphicsDevice graphics;
 
-        internal GameControl partida;
+        //internal GameControl partida;
         
         public Player(int x, int y, SpriteBatch spriteBatch) : base(x, y, new Rectangle(x, y, 64, 64))
         {
@@ -442,7 +444,7 @@ namespace Cliente
         public void DrawMap(int[,] map, int[] screensize)
         {
             //surface.DrawRectangle(0, 0, 320, 320, Color.Black, thickness: 320);
-            partida.DrawRectangle(new Rectangle(0, 0, 320, 320),Color.Black);
+            this.DrawRectangle(new Rectangle(0, 0, 320, 320),Color.Black);
             int indice = CELLSIZE / 2;
             for (int row = 0; row < map.GetLength(0); row++) // Rows
             {
@@ -450,16 +452,51 @@ namespace Cliente
                 {
                     int square = row * 64 + column; // Calcular el square index
                     //surface.DrawRectangle(new Rectangle(column * indice, row * indice, indice - 1, indice - 1), map[row, column] > 0 ? Color.White : Color.SkyBlue, thickness: indice - 2); // Se restan uno al ancho y el alto para que aparezcan las lineas de la cuadricula. El grosor hay que restarle 2.
-                    partida.DrawRectangle(new Rectangle(column * indice, row * indice, indice - 1, indice - 1), map[row, column] > 0 ? Color.White : Color.SkyBlue);
+                    this.DrawRectangle(new Rectangle(column * indice, row * indice, indice - 1, indice - 1), map[row, column] > 0 ? Color.White : Color.SkyBlue);
 
                 }
 
             }
             //surface.DrawCircle(position.X / CELLSIZE * indice, position.Y / CELLSIZE * indice, 8, 100, Color.Red, thickness: 8);
-            partida.DrawRectangle(new Rectangle((int)position.X / CELLSIZE * indice, (int)position.Y / CELLSIZE * indice, 8, 8),Color.Red);
+           this.DrawRectangle(new Rectangle((int)position.X / CELLSIZE * indice, (int)position.Y / CELLSIZE * indice, 8, 8),Color.Red);
             //surface.DrawLine(position.X / CELLSIZE * indice, position.Y / CELLSIZE * indice, (float)((position.X / CELLSIZE * indice + Math.Cos(this.player_angle) * indice)), (float)((position.Y / CELLSIZE * indice + Math.Sin(player_angle) * indice)), Color.Yellow, thickness: 4);
         }
-        
+        // --- Copia de las Funciones de soporte para monogame ---
+
+        private Texture2D CreateRectangle(Color color)
+        {
+            Texture2D res = new Texture2D(this.graphics, 1, 1);
+            res.SetData(new[] { color });
+            return res;
+
+        }
+        private Texture2D CreateRectangle(Color color, Microsoft.Xna.Framework.Graphics.GraphicsDevice graphicsDevice)
+        {
+            Texture2D res = new Texture2D(graphicsDevice, 1, 1);
+            res.SetData(new[] { color });
+            return res;
+
+        }
+
+
+
+        internal void DrawRectangle(Rectangle rectangulo, Color color) // Crear rectangulo rellenado
+        {
+            var buffer = this.CreateRectangle(color);
+            surface.Draw(buffer, rectangulo, Color.White);
+        }
+        internal void DrawRectangle(Rectangle rectangulo, Color color, Microsoft.Xna.Framework.Graphics.GraphicsDevice graphicsDevice) // Crear rectangulo rellenado
+        {
+            var buffer = this.CreateRectangle(color, graphicsDevice);
+            surface.Draw(buffer, rectangulo, Color.White);
+        }
+
+        public delegate void Para_crear_rectangulos(Rectangle rectangle, Color color, Microsoft.Xna.Framework.Graphics.GraphicsDevice graphicsDevice);
+
+
+       
+        // --- Fin de funciones de soporte para monogame ---
+
     }
 
     internal class Other : Sprite

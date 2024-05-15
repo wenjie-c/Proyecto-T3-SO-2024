@@ -225,16 +225,16 @@ Empieza con el comando 9 :
 
 ### En el cliente
 
-`9/<id_del_jugador>:<coordenada_X>;<coordenada_Y>`
+`9/<id_del_jugador>:<coordenada_X>;<coordenada_Y>/map:<mapa en formato json>`
 
 Por cada ciclo del juego.
 
 + El parámetro principal es el nombre del jugador, dos puntos y sus coordenadas.
-+ Pueden haber otros parámetros opcionales.
++ El segundo parámetro corresponde a una copia del mapa local en formato json. Aún no esta implementado.
 
 ### En el server
 
-``9/<id_del_jugador>:<coordenada_X>;<coordenada_Y>``
+``9/<id_del_jugador>:<coordenada_X>;<coordenada_Y>/map:<mapa en formato json>`
 
 Redireccion de las peticiones de los jugadores.
 
