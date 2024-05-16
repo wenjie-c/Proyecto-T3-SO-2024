@@ -32,6 +32,12 @@ namespace Cliente
 
                 switch (Convert.ToInt32(trozos[0]))
                 {
+                    case 1:
+                        this.id_jugador = Convert.ToInt32(trozos[1]);
+                        MessageBox.Show("Bienvenido: " + trozos[1]);
+
+                        break;
+
                     case 2:
                         this.id_jugador = Convert.ToInt32(trozos[1]);
                         MessageBox.Show("Tu id de jugador es: " + trozos[1]);
@@ -55,6 +61,10 @@ namespace Cliente
                         lista.add_partida(Convert.ToInt32(trozos[1]));
                         break;
                     case 5:
+
+
+
+
                         break;
                     case 6:
                         if(Convert.ToInt32(trozos[1]) == -1)
@@ -197,10 +207,6 @@ namespace Cliente
                 string mensaje = $"1/{nombre_tb.Text}/{password_tb.Text}";
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
-                byte[] msg2 = new byte[80];
-                server.Receive(msg2);
-                mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
-                MessageBox.Show("Bienvenido al servidor" + mensaje);
 
             }
             catch (SocketException err)
