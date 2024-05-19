@@ -191,6 +191,15 @@ MYSQL * db_cnx;
 } args;
 */
 
+void Broadcast(Conectado * yo, int id_partida, char * mensaje){ // Reenviar a todas los sockets de la partida excepto la nuestra.
+	for(int x = 0;  x < partidas[id_partida].num_jugador; x++){
+		if(partidas[id_partida].conectados[x].socket != yo->socket){
+			printf("Enviando: %s al socket %d\n", mensaje, partidas[id_partida].conectados[x].socket );
+			write(partidas[id_partida].conectados[x].socket, mensaje, strlen(mensaje));
+		}
+	}
+}
+
 
 void * AtenderCliente(void * temporal){
 	int sock_cnx;
@@ -216,6 +225,7 @@ void * AtenderCliente(void * temporal){
 		
 		peticion[ret] = '\0';
 		printf(" %s\n",peticion);
+		strcpy(respuesta,peticion); // Copio la peticion para evitar errores cuando llamo la funcion Broadcast y solamente quiero reenviar la peticion de un cliente al resto de clientes.
 		
 		int tipo;
 		char * token;
@@ -325,6 +335,8 @@ void * AtenderCliente(void * temporal){
 			write(sock_cnx,respuesta,strlen(respuesta));
 			break;
 		case 5: //Enviar mensajes
+			printf("Renvio de mensajes de chat.\n");
+			Broadcast(conectado,partida_actual.id_partida, respuesta);
 			break;
 		case 6: // Unirse en la partida
 			printf("Peticion de unir en la partida.\n");
@@ -384,7 +396,7 @@ void * AtenderCliente(void * temporal){
 					printf("El jugador %d ha aceptado que el jugador %d se una a la partida %d\n",respuesta,partidas[id_partida].conectados[0].id,conectado->id,id_partida);
 					partidas[id_partida].conectados[partidas[id_partida].num_jugador] = *conectado;
 					partidas[id_partida].num_jugador += 1;
-					partida partida_actual = partidas[id_partida];
+					partida_actual = partidas[id_partida];
 				}
 				pthread_mutex_unlock(&mutex);
 				sprintf(respuesta,"7/%d",decision);
@@ -397,6 +409,9 @@ void * AtenderCliente(void * temporal){
 			case 8:
 			sprintf(consulta,"%s",peticion); //Redirigir la peticion al otro hilo
 			break;
+			case 9:
+			//sprintf(respuesta,"%s",peticion);
+			Broadcast(conectado,partida_actual.id_partida, respuesta);
 		default:
 			break;
 		}

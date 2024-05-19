@@ -18,6 +18,7 @@ namespace Cliente
         internal int id_j;
         public int partida_seleccionada = -1;
         public Codigo_invitacion invitacion;
+        public bool invitacionflag = false;
         public lista_partidas()
         {
             InitializeComponent();
@@ -96,7 +97,12 @@ namespace Cliente
                 int id_partida = Convert.ToInt32(invitacion.codigo);
                 byte[] msg = Encoding.ASCII.GetBytes($"7/{invitacion.codigo}");
                 server.Send(msg);
+                //this.Close();
             }
+        }
+        public void aceptarInvitacion()
+        {
+            this.invitacionflag = true;
         }
     }
 }

@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Input;
 using MonoGame.Forms.Controls;
 using MonoGame;
 using System.IO;
+using System.Net;
+using System.Net.Sockets;
 
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Color = Microsoft.Xna.Framework.Color;
@@ -19,13 +21,18 @@ namespace Cliente
     class GameControl : MonoGame.Forms.Controls.MonoGameControl
     {
         // El juego en si
+        
 
         const string test = "Esto es no deberia salir en producción!";
 
         int[] ScreenSize = { 800, 600 };
 
+        public Socket server;
+        public int counter = 0; // Contador para no desbonrdar el buffer
+        
+
         List<Player> players;
-        int[,] map = {                  // La izquierda es el norte, abajo es el este
+        internal int[,] map = {                  // La izquierda es el norte, abajo es el este
             { 1,1,1,1,1,1,1,1,1,1},
         { 1,0,0,0,1,0,0,0,0,1},
         { 1,0,0,0,1,0,0,0,0,1},
@@ -51,13 +58,22 @@ namespace Cliente
             players[0].paredes = Editor.Content.Load<Texture2D>("madera3");
             players[0].HeightTexture = SliceView();
             players[0].raycastinglogs = new string[ScreenSize[0]];
-            players[0].partida = this;
-
-            CrearJugadorB();
+            players[0].graphics = this.GraphicsDevice;
         }
         
         protected override void Update(GameTime gameTime) {
 
+            // Primero comprobamos si hay otro jugador para enviarle lnuestras cordenadas
+            counter += (int)(1*gameTime.ElapsedGameTime.TotalSeconds);
+            if(server != null || counter >= 100)
+            {
+                string outcoming = $"9/0:{players[0].position.X.ToString()};{players[0].position.Y.ToString()}";
+                server.Send(System.Text.Encoding.ASCII.GetBytes(outcoming));
+                counter = 0;
+            }
+            // ----------------------------------------------------------------------
+
+            
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 using (var file = new StreamWriter("player.log", false))
@@ -131,6 +147,13 @@ namespace Cliente
         {
             JugadorB = new Other(320, 320,Editor.Content.Load<Texture2D>("fran"));
         }
+        public void UpdateJugadorB(double X, double Y)
+        {
+            JugadorB.position = new Vector2((float)X, (float)Y);
+        }
         // --- Fin de las Funciones para interactual con otros hilos ---
+
+        
+         
     }
 }
