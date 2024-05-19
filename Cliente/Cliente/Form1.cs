@@ -55,9 +55,11 @@ namespace Cliente
                             lista.Invoke(new EntreHilos(lista.parsing_server), string.Join("/", mensaje));
                             break;
                         case 4:
-                            lista.add_partida(Convert.ToInt32(trozos[1]));
+                            //lista.add_partida(Convert.ToInt32(trozos[1]));
+                            lista.Invoke(new Action<int>(lista.add_partida), new object[] { Convert.ToInt32(trozos[1]) });
                             break;
                         case 5:
+                            partida.Invoke(new Action<string>(partida.ReceiveMessage), new object[] { trozos[1] });
                             break;
                         case 6:
                             if (Convert.ToInt32(trozos[1]) == -1)
@@ -262,11 +264,13 @@ namespace Cliente
             partida.id_partida = id_partida;
             //partida.ShowDialog();
             partida.Show();
+            partida.id_jugador = id_jugador;
             //partida.InitializeGameControl();
             if (lista.invitacionflag || invitadoflag)
             {
                 partida.CrearJugadorB();
                 partida.SetSocket(this.server);
+                partida.enable_chat();
             }
             //partida.ShowDialog();
         }
