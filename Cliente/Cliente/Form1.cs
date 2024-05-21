@@ -208,19 +208,12 @@ namespace Cliente
                 MessageBox.Show("El campo de nombre y de la contraseña no pueden estar vacias");
                 return;
             }
-
-
-
             try
             {
 
                 string mensaje = $"1/{nombre_tb.Text}/{password_tb.Text}";
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
-                byte[] msg2 = new byte[80];
-                server.Receive(msg2);
-                mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
-                MessageBox.Show("Bienvenido al servidor" + mensaje);
 
             }
             catch (SocketException err)
