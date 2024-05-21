@@ -125,41 +125,44 @@ listas listar_partidas(MYSQL * cnx, int id_j){ // Devuelve la lista de ids de pa
 	return res;
 	
 }
-void Registrarse(char *Nombre[20],char *password[20],MYSQL *cnx,int *sock_conn,char respuesta[500]
-	char str_query[500];){ 
+void Registrarse(char *Nombre[20],char *password[20],MYSQL *db_cnx,int *sock_conn,char respuesta[500];){ 
+	char str_query[500];
 	int err;
+	char respuesta;
+	char nombre;
+	int contrasenya;
+	int sock_cnx;
 	MYSQL_RES *resultado;
 	MYSQL_ROW row;
 	
-		strcpy(respuesta,"1/\n");
-		int id=0;
-		strcpy(str_query,"SELECT MAX(id) FROM juego.Jugador;");
-		err=mysql_query (cnx, str_query);
-		if (err!=0)
-		{
-			printf ("Error al consultar datos de la base para la id: %u %s \n", mysql_errno(conn), mysql_error(conn));
-		}
-		
-			resultado = mysql_store_result (cnx);
-			row = mysql_fetch_row (resultado);
-		if(row!=NULL){
-			id = atoi(row[0]);
-			id = id+1;
-		}
-		
-		sprintf(str_query, "INSERT INTO Jugador VALUES ('%d','%s', '%s');",id ,nombre ,contrasenya);
-			err=mysql_query (cnx, str_query);
-
-		if (err!=0)
-		{
-			printf ("Error al consultar datos de la base %u %s \n",
-						mysql_errno(cnx), mysql_error(cnx));
-			
-		}
-		write (sock_cnx,respuesta, strlen(respuesta));
-		printf("salgo del register\n");
+	strcpy(respuesta,"1/\n");
+	int id=0;
+	strcpy(str_query,"SELECT MAX(id) FROM juego.Jugador;");
+	err=mysql_query (db_cnx, str_query);
+	if (err!=0)
+	{
+		printf ("Error al consultar datos de la base para la id: %u %s \n", mysql_errno(db_cnx), mysql_error(db_cnx));
 	}
-
+	
+	resultado = mysql_store_result (db_cnx);
+	row = mysql_fetch_row (resultado);
+	if(row!=NULL){
+		id = atoi(row[0]);
+		id = id+1;
+	}
+	
+	sprintf(str_query, "INSERT INTO Jugador VALUES ('%d','%s', '%s');",id ,nombre ,contrasenya);
+	err=mysql_query (db_cnx, str_query);
+	
+	if (err!=0)
+	{
+		printf ("Error al consultar datos de la base %u %s \n",
+				mysql_errno(db_cnx), mysql_error(db_cnx));
+		
+	}
+	write (sock_cnx,respuesta, strlen(respuesta));
+	printf("salgo del register\n");
+}
 int login(MYSQL * cnx,char * Nombre, char * password){ // Devuelve el id del primer usuario con ese nombre y esa contraseña
 	MYSQL_RES * resultados;
 	MYSQL_ROW row;
