@@ -35,6 +35,11 @@ namespace Cliente
                 if (int.TryParse(trozos[0],out n)){
                     switch (Convert.ToInt32(trozos[0]))
                     {
+                        case 1:
+                            this.id_jugador = Convert.ToInt32(trozos[1]);
+                            MessageBox.Show("Bienvenido: " + trozos[1]);
+
+                        break;
                         case 2:
                             this.id_jugador = Convert.ToInt32(trozos[1]);
                             MessageBox.Show("Tu id de jugador es: " + trozos[1]);
