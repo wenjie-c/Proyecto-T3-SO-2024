@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection.Emit;
+using System.Web;
 
 
 namespace Cliente
@@ -18,12 +19,20 @@ namespace Cliente
     {
         internal int id_partida;
         Socket server;
-        string Mipartida;
+        string msgRx;
         public Juego()
         {
             InitializeComponent();
         }
-
+        public void SetMensaje(string msgRecibido)
+        {
+            this.msgRx = msgRecibido;
+        }
+        string GetMensaje() 
+        {
+            string Mensaje = "5/"+Convert.ToString(id_partida)+"/"+LocalMsg.Text;
+            return Mensaje ;
+        }
         private void Juego_Load(object sender, EventArgs e)
         {
 
@@ -44,9 +53,7 @@ namespace Cliente
             {
                 string mensaje = "5/" + LocalMsg.Text + "/";
                 LocalMsg.Text = "";
-                // Enviamos al servidor el mensaje
-                byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
-                server.Send(msg);
+                this.Hide();
             }
 
         private void LocalMsg_TextChanged(object sender, EventArgs e)

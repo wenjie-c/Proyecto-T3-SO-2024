@@ -98,6 +98,7 @@ namespace Cliente
             this.LocalScreen.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LocalScreen.Multiline = true;
             this.LocalScreen.Name = "LocalScreen";
+            this.LocalScreen.ReadOnly = true;
             this.LocalScreen.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.LocalScreen.Size = new System.Drawing.Size(1063, 123);
             this.LocalScreen.TabIndex = 47;

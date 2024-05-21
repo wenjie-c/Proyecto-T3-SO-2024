@@ -29,6 +29,7 @@ namespace Cliente
                 server.Receive(incoming_msg);
                 string msg = Encoding.ASCII.GetString(incoming_msg).Split('\0')[0];
                 string[] trozos = msg.Split('/');
+                
 
                 switch (Convert.ToInt32(trozos[0]))
                 {
@@ -61,7 +62,10 @@ namespace Cliente
                         lista.add_partida(Convert.ToInt32(trozos[1]));
                         break;
                     case 5:
-
+                        this.Invoke(new Action(() =>
+                        {
+                            Jugar()
+                        }));
 
 
 
