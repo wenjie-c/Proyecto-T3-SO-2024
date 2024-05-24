@@ -167,7 +167,7 @@ namespace Cliente
                 if (this.conectar_desconectar_btn.Text == "Conectar")
                 {
                     IPAddress direc = IPAddress.Parse("192.168.56.102");
-                    IPEndPoint ipep = new IPEndPoint(direc, 9050);
+                    IPEndPoint ipep = new IPEndPoint(direc, 9050); 
                     this.server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     this.server.Connect(ipep);
 

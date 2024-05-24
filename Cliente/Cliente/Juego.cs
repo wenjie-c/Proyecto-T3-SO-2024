@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
+using System.Media;
 
 
 namespace Cliente
@@ -18,13 +19,17 @@ namespace Cliente
         internal int id_partida;
         internal int id_jugador;
         internal Socket server; //Fijese que el socket lo utilizamos si hemos aceptado al otro jugador.
-        
+        private SoundPlayer soundplayer;
+
+
         public Juego()
         {
             InitializeComponent();
             this.chat_rtb.Enabled = false;
             this.send_tb.Enabled = false;
             this.send_btn.Enabled = false;
+            string ruta = @"C:\Users\junji\OneDrive\Escritorio\SO\Proyecto WJA\Proyecto-T3-SO-2024\Cliente\Cliente\bin\Musica.wav";
+            soundplayer = new SoundPlayer(ruta);
 
         }
 
@@ -33,6 +38,15 @@ namespace Cliente
             this.chat_rtb.Enabled = true;
             this.send_tb.Enabled = true;
             this.send_btn.Enabled = true;
+            try
+            {
+                soundplayer.Play();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al reproducir el archivo de audio: " + ex.Message);
+            }
         }
 
         internal void enable_chat() //Ejecutar cuando se esta en multijugador
