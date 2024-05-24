@@ -30,9 +30,7 @@ namespace Cliente
 
         private void Juego_Load(object sender, EventArgs e)
         {
-            this.chat_rtb.Enabled = true;
-            this.send_tb.Enabled = true;
-            this.send_btn.Enabled = true;
+            
         }
 
         internal void enable_chat() //Ejecutar cuando se esta en multijugador
@@ -66,6 +64,9 @@ namespace Cliente
         internal void CrearJugadorB()
         {
             gameControl1.CrearJugadorB();
+            this.chat_rtb.Enabled = true;
+            this.send_tb.Enabled = true;
+            this.send_btn.Enabled = true;
         }
 
         internal void DisableGameControl()
