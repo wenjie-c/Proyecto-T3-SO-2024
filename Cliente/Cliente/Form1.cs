@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
 using System.Net.Sockets;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Cliente
 {
@@ -38,8 +39,13 @@ namespace Cliente
                         case 1:
                             this.id_jugador = Convert.ToInt32(trozos[1]);
                             MessageBox.Show("Bienvenido: " + trozos[1]);
+                          //  this.Invoke(new Action(() =>
+                          //  {
+                            //    nombre_tb.Text = "";
+                           //     password_tb.Text = "";
+                          //  }));
 
-                        break;
+                            break;
                         case 2:
                             this.id_jugador = Convert.ToInt32(trozos[1]);
                             MessageBox.Show("Tu id de jugador es: " + trozos[1]);
@@ -280,7 +286,10 @@ namespace Cliente
             partida.UpdateControl(trozo);
         }
 
-        
+        private void nombre_tb_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

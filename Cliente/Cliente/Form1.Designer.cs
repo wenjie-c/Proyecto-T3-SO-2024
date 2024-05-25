@@ -56,7 +56,7 @@ namespace Cliente
             this.tableLayoutPanel1.Controls.Add(this.play_btn, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(4);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -96,7 +96,7 @@ namespace Cliente
             this.login_btn.Enabled = false;
             this.login_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.login_btn.Location = new System.Drawing.Point(147, 86);
-            this.login_btn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.login_btn.Margin = new System.Windows.Forms.Padding(4);
             this.login_btn.Name = "login_btn";
             this.login_btn.Size = new System.Drawing.Size(168, 33);
             this.login_btn.TabIndex = 2;
@@ -108,16 +108,17 @@ namespace Cliente
             // 
             this.nombre_tb.Dock = System.Windows.Forms.DockStyle.Fill;
             this.nombre_tb.Location = new System.Drawing.Point(147, 4);
-            this.nombre_tb.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nombre_tb.Margin = new System.Windows.Forms.Padding(4);
             this.nombre_tb.Name = "nombre_tb";
             this.nombre_tb.Size = new System.Drawing.Size(168, 22);
             this.nombre_tb.TabIndex = 3;
+            this.nombre_tb.TextChanged += new System.EventHandler(this.nombre_tb_TextChanged);
             // 
             // password_tb
             // 
             this.password_tb.Dock = System.Windows.Forms.DockStyle.Fill;
             this.password_tb.Location = new System.Drawing.Point(147, 45);
-            this.password_tb.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.password_tb.Margin = new System.Windows.Forms.Padding(4);
             this.password_tb.Name = "password_tb";
             this.password_tb.Size = new System.Drawing.Size(168, 22);
             this.password_tb.TabIndex = 4;
@@ -127,7 +128,7 @@ namespace Cliente
             this.conectar_desconectar_btn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.conectar_desconectar_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.conectar_desconectar_btn.Location = new System.Drawing.Point(4, 86);
-            this.conectar_desconectar_btn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.conectar_desconectar_btn.Margin = new System.Windows.Forms.Padding(4);
             this.conectar_desconectar_btn.Name = "conectar_desconectar_btn";
             this.conectar_desconectar_btn.Size = new System.Drawing.Size(135, 33);
             this.conectar_desconectar_btn.TabIndex = 5;
@@ -141,7 +142,7 @@ namespace Cliente
             this.sign_up_btn.Enabled = false;
             this.sign_up_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.sign_up_btn.Location = new System.Drawing.Point(147, 127);
-            this.sign_up_btn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.sign_up_btn.Margin = new System.Windows.Forms.Padding(4);
             this.sign_up_btn.Name = "sign_up_btn";
             this.sign_up_btn.Size = new System.Drawing.Size(168, 36);
             this.sign_up_btn.TabIndex = 6;
@@ -155,7 +156,7 @@ namespace Cliente
             this.play_btn.Enabled = false;
             this.play_btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.play_btn.Location = new System.Drawing.Point(4, 127);
-            this.play_btn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.play_btn.Margin = new System.Windows.Forms.Padding(4);
             this.play_btn.Name = "play_btn";
             this.play_btn.Size = new System.Drawing.Size(135, 36);
             this.play_btn.TabIndex = 7;
@@ -170,7 +171,7 @@ namespace Cliente
             this.ClientSize = new System.Drawing.Size(319, 167);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.Text = "Cliente";
             this.Load += new System.EventHandler(this.Form1_Load);
