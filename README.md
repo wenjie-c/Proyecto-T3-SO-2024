@@ -1,7 +1,7 @@
 # Proyecto-T3-SO-2024
 Proyecto del grupo T3
 
-Version v5-dev generado por Wenjie C.
+Version v7-dev generado por Wenjie C.
 
 ----
 # Protocolo de la aplicación.
@@ -243,3 +243,9 @@ Redireccion de las peticiones de los jugadores.
 # Configuracion de Shiva
 
 Se utiliza el puerto 50070.
+
+# Credits
+
+[Littleroot Town sheets by EmptyGlassCup](https://musescore.com/user/35300814/scores/6317395)
+
+[MonoGame.Forms]([BlizzCrafter/MonoGame.Forms: MonoGame.Forms is the easiest way of integrating a MonoGame render window into your Windows Forms project. It should make your life much easier, when you want to create your own editor environment. (github.com)](https://github.com/BlizzCrafter/MonoGame.Forms))
