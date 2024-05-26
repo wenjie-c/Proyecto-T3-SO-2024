@@ -15,6 +15,7 @@ using System.Net.Sockets;
 using Rectangle = Microsoft.Xna.Framework.Rectangle;
 using Color = Microsoft.Xna.Framework.Color;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
+using Microsoft.Xna.Framework.Media;
 
 namespace Cliente
 {
@@ -29,7 +30,7 @@ namespace Cliente
 
         public Socket server;
         public int counter = 0; // Contador para no desbonrdar el buffer
-        
+        Song background;
 
         List<Player> players;
         internal int[,] map = {                  // La izquierda es el norte, abajo es el este
@@ -59,8 +60,15 @@ namespace Cliente
             players[0].HeightTexture = SliceView();
             players[0].raycastinglogs = new string[ScreenSize[0]];
             players[0].graphics = this.GraphicsDevice;
+            background = Editor.Content.Load<Song>("Littleroot_Town");
+            MediaPlayer.Play(background);
+            MediaPlayer.IsRepeating = true;
+            this.Disposed += GameControl_Disposed;
+            
         }
+
         
+
         protected override void Update(GameTime gameTime) {
 
             // Primero comprobamos si hay otro jugador para enviarle lnuestras cordenadas
@@ -139,6 +147,11 @@ namespace Cliente
                 res[x] = new Rectangle(x, 0, 1, ScreenSize[1]);
             }
             return res;
+        }
+
+        private void GameControl_Disposed(object sender, EventArgs e)
+        {
+            MediaPlayer.Stop();
         }
         // --- Fin de funciones de soporte para monogame ---
 

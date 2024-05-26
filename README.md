@@ -6,74 +6,76 @@ Version v5-dev generado por Wenjie C.
 ----
 # Protocolo de la aplicación.
 ```mermaid
-sequenceDiagram
-participant Client
-participant Server
-Client ->> Server: Establecer conexión.
-activate Server
-Server ->> Client : Conexión establecida.
-Client ->> Server : "2/Usuario/Contraseña"
-Note left of Client : Proceso de Login
-Note left of Client : 2 es el comando para login con nombre de usuario y contraseña
-alt Usuario y contraseña correcta
-Server -->> Client : "2/9"
-Note right of Server : Devuelve asinrónicamente el id del jugador
-Note right of Server : El código 2 es el comando para proporcionar el id del jugador.
-else Usuario y contraseña incorrecta o no existe
-Server -->> Client : "2/-1"
-Note right of Server : Como los ID de jugador empiezan a partir del 0, -1 significa error.
-loop Hasta Logear o registrarse con éxito.
-Client ->> Server : "1/Usuario/Contraseña"
+sequenceDiagram;
+participant Cliente B;
+participant Cliente A;
 
-Note left of Client : Procesor de registro
-alt Registro correcto
+participant Servidor (Shiva);
+participant Base de datos (Shiva 2);
 
-Server -->> Client : "1/0" 
-Note right of Server: 1 es el comando para informar sobre el evento de registrarse, 0: con éxito , -1:con error.
-Client ->> Server : "2/Usuario/Contraseña"
-Server -->> Client : "2/9"
-Note right of Server: Sales del bucle.
-else Ha habido algun error
-Server -->> Client : "1/-1"
-end
-end
-end
-Note right of Server : Proceso de devolver la lista de partidas
-Server -->> Client : "3/2/7/12"
-Note right of Server: 3 es el comando para devolver las listas de partidas, seguido por el número de partidas y al final todas las ids de partidas separado por barras inclinadas.
-Note left of Client: Proceso de crear partida
-Client ->> Server : "4/0"
-Note left of Client : 4 es el comando para crear nueva partida, después viene el código de configuración de la partida.
-alt Creacion de partida con éxito
-Server -->> Client : "4/30"
-Note right of Server : 4 es el comando del server para devolver el id de la partida recién creada.
-else No se ha podido crear
-Server -->> Client : devuelve como id de partida -1: es decir, ha habido un error.
+Servidor (Shiva) ->> Base de datos (Shiva 2): MYSQL * mysql_real_connect();
+alt Conexión con éxito
+Base de datos (Shiva 2) ->> Servidor (Shiva): MYSQL * cnx;
+else Coneión fallida
+Base de datos (Shiva 2) ->> Servidor (Shiva): cnx = NULL;
+Note right of Servidor (Shiva): Server.c: return -1;
+end;
+Note right of Servidor (Shiva): Servidor listo para recibir las peticiones de los clientes.
+Note right of Cliente A: Proceso de login;
+Cliente A ->> Servidor (Shiva): 2/nombre/contraseña
+Servidor (Shiva) ->> Base de datos (Shiva 2): mysql_query();
+alt Login con éxito
+Base de datos (Shiva 2) ->> Servidor (Shiva): MYSQL_RES * resultado = mysql_store_result();
+Servidor (Shiva) -->> Cliente A: 2/id_jugador;
+Note right of Cliente A: Todos los mensajes recibidos desde el servidor es asíncrono y es recibido desde otro hilo.
+else Login fallido
+Servidor (Shiva) -->> Cliente A: 2/-1;
 end
 
-Note left of Client: Proceso de entrar en una partida.
-Client ->> Server: "7/30"
-Note left of Client : 7 es el comando para entrar en una partida , seguido del id de la partida.
+Note right of Cliente A: Listar partidas del jugador.
+Cliente A ->> Servidor (Shiva): 3/;
+Servidor (Shiva) ->> Base de datos (Shiva 2): mysql_query();
+Base de datos (Shiva 2) ->> Servidor (Shiva): MYSQL_RES * resultado = mysql_store_result();
+Servidor (Shiva) -->> Cliente A: 3/2/7/19;
+Note right of Cliente B: El mismo proceso que ha realizado cliente A.
+Note right of Cliente A: Proceso de creacion de nueva partida.;
+Cliente A ->> Servidor (Shiva): 4/0;
+Servidor (Shiva) ->> Base de datos (Shiva 2): mysql_query();
+Servidor (Shiva) -->> Cliente A: 4/id_partida;
 
-loop Bucle de partida
-Client ->> Server : "9/1/coordenadaX,coordenadaY"
-Note left of Client : 9 es el comando para dar a conocer a los otros usuarios tus coordenadas, le sigue un subcomando.
-Server -->> Client : "9/1/JugadorB,coordenadaX,coordenadaY"
-Note right of Server : 9 es el comando para actualizar la partida, le sigue el números de jugadores a aprte de ti y después viene el nombre y las coordenadas. El 0 esta reservado.
+Note right of Cliente B: Proceso de invitacion de partida;
 
-alt Hay un mensaje nuevo.
-Server -->> Client : 5/JugadorB:Hola!
-Note right of Server: 5 es el comando del Server para notificar de un nuevo mensaje.
-end
-Client ->> Server: 5/Usuario:Hola!
-Note left of Client: 5 es el comando del Client para enviar un mensaje.
-alt El jugador se quiere irse de la partida
-Note left of Client: 8 es el comando de actualizar partida, pero seguid del subcomando 0 que es para salir de la partida. Sale del bucle de partida.
-end
-end
+Cliente B ->> Servidor (Shiva): 7/id_partida
+Servidor (Shiva) -->> Cliente A: 8/id_jugador
+alt Ha aceptado
+Cliente A -->> Servidor (Shiva): 8/0;
+else No ha aceptado
+Cliente A -->> Servidor (Shiva): 8/-1
+end;
+Servidor (Shiva) -->> Cliente B: 7/decision tomado por el otro cliente.
+Note right of Cliente B: Suponemos que cliente A ha aceptado.
 
-deactivate Server
+Note right of Cliente B: Se inicia el formulario de Juego en los dos clientes.
 
+par Por cada ciclo de juego
+loop Hasta cerrar el formulario de juego.
+Cliente A ->> Servidor (Shiva): 9/id:coordenada x coordenada y/mapa en formato JSON;
+Servidor (Shiva) -->> Cliente A: 9/id2:coordenada x coordenada y/mapa en formato JSON;
+end;
+and Por cada ciclo de juego
+loop Hasta cerrar el formulario de juego.
+Cliente B ->> Servidor (Shiva): 9/id2:coordenada x coordenada y/mapa en formato JSON;
+Servidor (Shiva) -->> Cliente B: 9/id:coordenada x coordenada y/mapa en formato JSON;
+end;
+and Cada vez que se envia un mensaje
+loop Hasta cerrar el formulario de juego.
+Cliente A ->> Servidor (Shiva): 5/Usuario:Hola!;
+Servidor (Shiva) -->> Cliente B : 5/Usuario:Hola;
+end;
+end;
+
+Note right of Cliente B: Se va de la partida;
+Cliente B ->> Servidor (Shiva): 0/;
 
 ```
 
@@ -234,7 +236,10 @@ Por cada ciclo del juego.
 
 ### En el server
 
-``9/<id_del_jugador>:<coordenada_X>;<coordenada_Y>/map:<mapa en formato json>`
+`9/<id_del_jugador>:<coordenada_X>;<coordenada_Y>/map:<mapa en formato json>`
 
 Redireccion de las peticiones de los jugadores.
 
+# Configuracion de Shiva
+
+Se utiliza el puerto 50070.

@@ -25,6 +25,12 @@
 /processorParam:TextureFormat=Color
 /build:fran.png
 
+#begin Littleroot_Town.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Littleroot_Town.mp3
+
 #begin madera3.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -5,9 +5,11 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/wenji/Documents/shared/Proyecto-T3-SO-2024/Cliente/Cliente/Content/fran.png</File>
+    <File>C:/Users/wenji/Documents/shared/Proyecto-T3-SO-2024/Cliente/Cliente/Content/Littleroot_Town.mp3</File>
     <File>C:/Users/wenji/Documents/shared/Proyecto-T3-SO-2024/Cliente/Cliente/Content/madera3.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
   </DestFiles>

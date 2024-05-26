@@ -162,7 +162,7 @@ MYSQL * init()
 		exit(1);
 	}
 	
-	cnx = mysql_real_connect (cnx, "localhost", "root", "mysql", NULL, 0, NULL, 0);
+	cnx = mysql_real_connect (cnx, "shiva2.upc.es", "root", "mysql", NULL, 0, NULL, 0);
 	
 	if(cnx == NULL){
 		printf("Error al crear la conexion: %u &s\n", mysql_errno(cnx),mysql_error(cnx));
@@ -170,7 +170,7 @@ MYSQL * init()
 	}
 	
 	//mysql_query(cnx, "CREATE DATABASE IF NO EXISTS juego");
-	err=mysql_query(cnx, "use juego");
+	err=mysql_query(cnx, "use T3");
 	if(err!= 0){
 		printf("Error al crear la tabla: %u &s\n", mysql_errno(cnx),mysql_error(cnx));
 		exit(1);
@@ -443,8 +443,8 @@ int main(){
 	
 	// --- Asociar el socket a cualquier ip de la maquina ---
 	serv_adr.sin_addr.s_addr = htonl(INADDR_ANY);
-	// --- Escuchamos en el puerto 9050 ---
-	serv_adr.sin_port = htons(9050);
+	// --- Escuchamos en el puerto 50070 ---
+	serv_adr.sin_port = htons(50070);
 	if(bind(sock_listen, (struct sockaddr *) &serv_adr, sizeof(serv_adr)) < 0)
 		printf("Error en el bind");
 	

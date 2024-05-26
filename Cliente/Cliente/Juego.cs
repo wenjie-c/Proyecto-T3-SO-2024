@@ -25,7 +25,7 @@ namespace Cliente
             this.chat_rtb.Enabled = false;
             this.send_tb.Enabled = false;
             this.send_btn.Enabled = false;
-
+            this.FormClosing += new FormClosingEventHandler(CloseGameControl);
         }
 
         private void Juego_Load(object sender, EventArgs e)
@@ -88,6 +88,10 @@ namespace Cliente
             gameControl1.UpdateJugadorB(posX, posY);
         }
 
+        private void CloseGameControl(object sender, FormClosingEventArgs e)
+        {
+            gameControl1.Dispose();
+        }
         
         // --- Fin de funciones para GameControl ---
 

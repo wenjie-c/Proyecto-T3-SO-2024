@@ -75,6 +75,7 @@ namespace Cliente
             }
             else
             {
+                if (lista_partidas_lsbx.SelectedItem == null) return;
                 var id_partida = lista_partidas_lsbx.SelectedItem.ToString();
                 partida_seleccionada = Convert.ToInt32(id_partida);
                 this.partida_seleccionada = Convert.ToInt32(lista_partidas_lsbx.SelectedItem);
