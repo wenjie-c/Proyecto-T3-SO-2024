@@ -73,7 +73,7 @@ namespace Cliente
 
             // Primero comprobamos si hay otro jugador para enviarle lnuestras cordenadas
             counter += (int)(1*gameTime.ElapsedGameTime.TotalSeconds);
-            if(server != null || counter >= 100)
+            if(server != null && counter >= 5)
             {
                 string outcoming = $"9/0:{players[0].position.X.ToString()};{players[0].position.Y.ToString()}";
                 server.Send(System.Text.Encoding.ASCII.GetBytes(outcoming));
