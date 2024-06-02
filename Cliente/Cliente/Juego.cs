@@ -49,12 +49,14 @@ namespace Cliente
         }
         private void send_btn_Click(object sender, EventArgs e)
         {
-            string outcoming = $"{id_jugador.ToString()}:" + send_tb.Text;
-            this.chat_rtb.Text += "\n" + outcoming;
-            byte[] msg = Encoding.ASCII.GetBytes($"5/{outcoming}");
-            server.Send(msg);
-            this.send_tb.Text = string.Empty; // Limpiar el textbox
-
+            lock (server) // Acceso exclusivo a este recurso compartido (https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/lock)
+            {
+                string outcoming = $"{id_jugador.ToString()}:" + send_tb.Text;
+                this.chat_rtb.Text += "\n" + outcoming;
+                byte[] msg = Encoding.ASCII.GetBytes($"5/{outcoming}");
+                server.Send(msg);
+                this.send_tb.Text = string.Empty; // Limpiar el textbox
+            }
         }
         internal void ReceiveMessage(string msg)
         {
