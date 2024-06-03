@@ -25,14 +25,19 @@ namespace Cliente
         
 
         const string test = "Esto es no deberia salir en producción!";
+        /*
+        public delegate void UpdateEventHandler(object sender,string args);
+        public event UpdateEventHandler OnUpdate;
+        */
+
 
         int[] ScreenSize = { 800, 600 };
 
         public Socket server;
-        public int counter = 0; // Contador para no desbonrdar el buffer
+        //public int counter = 0; // Contador para no desbonrdar el buffer
         Song background;
 
-        List<Player> players;
+        public List<Player> players;
         internal int[,] map = {                  // La izquierda es el norte, abajo es el este
             { 1,1,1,1,1,1,1,1,1,1},
         { 1,0,0,0,1,0,0,0,0,1},
@@ -72,16 +77,20 @@ namespace Cliente
         protected override void Update(GameTime gameTime) {
 
             // Primero comprobamos si hay otro jugador para enviarle lnuestras cordenadas
-            counter += (int)(1*gameTime.ElapsedGameTime.TotalSeconds);
-            if(server != null && counter >= 5)
+            /*
+            counter += (int)(gameTime.ElapsedGameTime.TotalSeconds);
+            if(server != null || counter >= 100000)
             {
                 string outcoming = $"9/0:{players[0].position.X.ToString()};{players[0].position.Y.ToString()}";
+                if (OnUpdate != null) OnUpdate(this, $"Se ha enviado : {outcoming} con periodo {gameTime.ElapsedGameTime.TotalSeconds.ToString()} con el contador {counter.ToString()}");
                 server.Send(System.Text.Encoding.ASCII.GetBytes(outcoming));
+                
                 counter = 0;
             }
             // ----------------------------------------------------------------------
-
+            */
             
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
                 using (var file = new StreamWriter("player.log", false))

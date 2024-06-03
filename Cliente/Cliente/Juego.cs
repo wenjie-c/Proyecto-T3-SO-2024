@@ -8,7 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net;
+using System.Timers;
 using System.Net.Sockets;
+
 
 
 namespace Cliente
@@ -17,16 +19,25 @@ namespace Cliente
     {
         internal int id_partida;
         internal int id_jugador;
+        internal bool invitadoflag;
         internal Socket server; //Fijese que el socket lo utilizamos si hemos aceptado al otro jugador.
-        
-        public Juego()
+        System.Timers.Timer timer = new System.Timers.Timer(500);
+        public Juego(bool invitadof)
         {
             InitializeComponent();
             this.chat_rtb.Enabled = false;
             this.send_tb.Enabled = false;
             this.send_btn.Enabled = false;
             this.FormClosing += new FormClosingEventHandler(CloseGameControl);
+            //gameControl1.OnUpdate += new GameControl.UpdateEventHandler(SetStatusBar);
+            timer.Elapsed += Timer_Elapsed;
+            timer.AutoReset = true;
+            invitadoflag = invitadof;
+            if (invitadoflag) timer.Start();
+            
         }
+
+        
 
         private void Juego_Load(object sender, EventArgs e)
         {
@@ -93,8 +104,21 @@ namespace Cliente
         private void CloseGameControl(object sender, FormClosingEventArgs e)
         {
             gameControl1.Dispose();
+            timer.Stop();
+            timer.Dispose();
         }
-        
+
+        internal void SetStatusBar(object sender ,string text)
+        {
+            estado.Text = text;
+        }
+
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e) //Temporizador para enviar coordenadas
+        {
+            string outcoming = $"9/0:{gameControl1.players[0].position.X.ToString()};{gameControl1.players[0].position.Y.ToString()}";
+            SetStatusBar(this, $"Se ha enviado : {outcoming} con periodo {timer.Interval.ToString()}");
+            server.Send(System.Text.Encoding.ASCII.GetBytes(outcoming));
+        }
         // --- Fin de funciones para GameControl ---
 
     }
