@@ -30,19 +30,18 @@ namespace Cliente
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-<<<<<<< Updated upstream
+
             this.gameControl1 = new Cliente.GameControl();
-=======
->>>>>>> Stashed changes
+
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.chat_rtb = new System.Windows.Forms.RichTextBox();
             this.send_tb = new System.Windows.Forms.TextBox();
             this.send_btn = new System.Windows.Forms.Button();
             this.barra_estado = new System.Windows.Forms.StatusStrip();
-<<<<<<< Updated upstream
-=======
+
+
             this.gameControl1 = new Cliente.GameControl();
->>>>>>> Stashed changes
+
             this.estado = new System.Windows.Forms.ToolStripStatusLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -65,7 +64,6 @@ namespace Cliente
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
-<<<<<<< Updated upstream
             // gameControl1
             // 
             this.gameControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -78,8 +76,6 @@ namespace Cliente
             this.gameControl1.Text = "gameControl1";
             this.gameControl1.Click += new System.EventHandler(this.gameControl1_Click);
             // 
-=======
->>>>>>> Stashed changes
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
@@ -130,8 +126,7 @@ namespace Cliente
             this.send_btn.Click += new System.EventHandler(this.send_btn_Click);
             // 
             // barra_estado
-            // 
-<<<<<<< Updated upstream
+
             this.barra_estado.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.barra_estado.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.estado});
@@ -146,7 +141,6 @@ namespace Cliente
             // 
             this.estado.Name = "estado";
             this.estado.Size = new System.Drawing.Size(0, 16);
-=======
             this.barra_estado.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.estado});
             this.barra_estado.Location = new System.Drawing.Point(0, 761);
@@ -168,9 +162,7 @@ namespace Cliente
             // 
             // estado
             // 
-            this.estado.Name = "estado";
-            this.estado.Size = new System.Drawing.Size(0, 17);
->>>>>>> Stashed changes
+            
             // 
             // Juego
             // 

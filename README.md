@@ -1,7 +1,7 @@
 # Proyecto-T3-SO-2024
 Proyecto del grupo T3
 
-Version v7-dev generado por Wenjie C.
+Version final generado por Wenjie C.
 
 ----
 # Protocolo de la aplicación.

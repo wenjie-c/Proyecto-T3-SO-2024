@@ -283,27 +283,18 @@ namespace Cliente
             }
             //partida.ShowDialog();
         }
-<<<<<<< Updated upstream
+
+
+       
 
         private void Partida_FormClosing(object sender, FormClosingEventArgs e)
         {
-=======
-<<<<<<< HEAD
-        internal void setInvitado()
-        {
-=======
 
-        private void Partida_FormClosing(object sender, FormClosingEventArgs e)
-        {
->>>>>>> Stashed changes
             closedjuego = true;
         }
 
         internal void setInvitado() {
-<<<<<<< Updated upstream
-=======
->>>>>>> dd0d794ab019552e33be4d02f82fcac723945772
->>>>>>> Stashed changes
+
             invitadoflag = true;
         }
         internal void UpdateJugadorB(string trozo)
@@ -311,17 +302,12 @@ namespace Cliente
             partida.UpdateControl(trozo);
         }
 
-<<<<<<< Updated upstream
-        private bool getclosedjuego() { return closedjuego; }
-        
-=======
-<<<<<<< HEAD
 
-=======
+
+
         private bool getclosedjuego() { return closedjuego; }
         
->>>>>>> dd0d794ab019552e33be4d02f82fcac723945772
->>>>>>> Stashed changes
+
     }
 }
 
