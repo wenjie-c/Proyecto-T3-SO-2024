@@ -248,7 +248,7 @@ void * AtenderCliente(void * temporal){
 		case 1: // Registro
 			
 			
-			strcpy(str_query,"SELECT MAX(id) FROM juego.Jugador;");
+			strcpy(str_query,"SELECT MAX(id) FROM Jugador;");
 			err=mysql_query (db_cnx, str_query);					
 			if (err!=0)
 			{
@@ -443,8 +443,8 @@ int main(){
 	
 	// --- Asociar el socket a cualquier ip de la maquina ---
 	serv_adr.sin_addr.s_addr = htonl(INADDR_ANY);
-	// --- Escuchamos en el puerto 50070 ---
-	serv_adr.sin_port = htons(50070);
+	// --- Escuchamos en el puerto 50073 ---
+	serv_adr.sin_port = htons(50073);
 	if(bind(sock_listen, (struct sockaddr *) &serv_adr, sizeof(serv_adr)) < 0)
 		printf("Error en el bind");
 	
