@@ -22,6 +22,10 @@ namespace Cliente
         bool invitadoflag = false;
         Thread atender;
         Juego partida;
+        bool closedjuego = false;
+
+        delegate bool getflag();
+        
         private void AtenderServidor()
         {
             while (true)
@@ -80,6 +84,7 @@ namespace Cliente
                                 //MessageBox.Show($"Te has unido en la partida: {id_partida}, invitacion con exito.");
 
                                 lista.Invoke(new Action(lista.aceptarInvitacion)); // Te han aceptado la invitacion
+                                this.Invoke(new Action(setInvitado));
                                 MessageBox.Show($"Invitacion con exito.");
                                 lista.Invoke(new Action(lista.Close));
                                 //this.Invoke(new Action<int>(Jugar), id_partida);
@@ -105,7 +110,8 @@ namespace Cliente
                             }
                             break;
                         case 9:
-                            if (partida != null)
+                            if(partida != null)
+                            if (!partida.IsDisposed)
                                 partida.Invoke(new Action<string>(this.UpdateJugadorB), new object[] { trozos[1] });
                             break;
                     }
@@ -162,7 +168,7 @@ namespace Cliente
                 if (this.conectar_desconectar_btn.Text == "Conectar")
                 {
                     IPAddress direc = IPAddress.Parse("10.4.119.5");
-                    IPEndPoint ipep = new IPEndPoint(direc, 50071);
+                    IPEndPoint ipep = new IPEndPoint(direc, 50073);
                     this.server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     this.server.Connect(ipep);
 
@@ -260,8 +266,9 @@ namespace Cliente
 
         private void Jugar(int id_partida)
         {
-            partida = new Juego();
+            partida = new Juego(invitadoflag);
             partida.id_partida = id_partida;
+            partida.FormClosing += Partida_FormClosing; 
             //partida.ShowDialog();
             partida.Show();
             partida.id_jugador = id_jugador;
@@ -274,6 +281,12 @@ namespace Cliente
             }
             //partida.ShowDialog();
         }
+
+        private void Partida_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            closedjuego = true;
+        }
+
         internal void setInvitado() {
             invitadoflag = true;
         }
@@ -282,6 +295,7 @@ namespace Cliente
             partida.UpdateControl(trozo);
         }
 
+        private bool getclosedjuego() { return closedjuego; }
         
     }
 }
