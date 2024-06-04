@@ -169,9 +169,9 @@ namespace Cliente
         {
             JugadorB = new Other(320, 320,Editor.Content.Load<Texture2D>("fran"));
         }
-        public void UpdateJugadorB(double X, double Y)
+        public void UpdateJugadorB(float X, float Y)
         {
-            JugadorB.position = new Vector2((float)X, (float)Y);
+            JugadorB.position = new Vector2(X, Y);
         }
         // --- Fin de las Funciones para interactual con otros hilos ---
 

@@ -431,7 +431,8 @@ namespace Cliente
             }
             if (found)
             {
-                
+
+                if (found2.distance == 0) found2.distance += 0.01f; // Correccion para no obtener infinito.
                 double line_ratio2 = (CELLSIZE / 2) / ((found2.distance / d) * (CELLSIZE / 2));
                 int altura = Convert.ToInt32(line_ratio2 * altura_media * 2);
                 Console.WriteLine($"JugadorB encontrado! Con altura: {altura}");

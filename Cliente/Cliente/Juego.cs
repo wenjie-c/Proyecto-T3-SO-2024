@@ -95,9 +95,11 @@ namespace Cliente
         {
             string[] partes = coordenadas.Split(':');
             string[] posicion = partes[1].Split(';');
-            double posX, posY;
-            posX = Convert.ToDouble(posicion[0]);
-            posY = Convert.ToDouble(posicion[1]);
+            float posX, posY;
+            //posX = Convert.ToFloat(posicion[0]);
+            float.TryParse(posicion[0], out posX);
+            float.TryParse(posicion[1], out posY);
+            //posY = Convert.ToDouble(posicion[1]);
             gameControl1.UpdateJugadorB(posX, posY);
         }
 
@@ -115,9 +117,12 @@ namespace Cliente
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e) //Temporizador para enviar coordenadas
         {
-            string outcoming = $"9/0:{gameControl1.players[0].position.X.ToString()};{gameControl1.players[0].position.Y.ToString()}";
-            SetStatusBar(this, $"Se ha enviado : {outcoming} con periodo {timer.Interval.ToString()}");
-            server.Send(System.Text.Encoding.ASCII.GetBytes(outcoming));
+            if (gameControl1.players[0] != null)
+            {
+                string outcoming = $"9/0:{gameControl1.players[0].position.X.ToString()};{gameControl1.players[0].position.Y.ToString()}";
+                SetStatusBar(this, $"Se ha enviado : {outcoming} con periodo {timer.Interval.ToString()}");
+                server.Send(System.Text.Encoding.ASCII.GetBytes(outcoming));
+            }
         }
         // --- Fin de funciones para GameControl ---
 
