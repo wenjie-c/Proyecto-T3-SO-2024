@@ -63,7 +63,9 @@ namespace Cliente
                             lista.Invoke(new Action<int>(lista.add_partida), new object[] { Convert.ToInt32(trozos[1]) });
                             break;
                         case 5:
-                            partida.Invoke(new Action<string>(partida.ReceiveMessage), new object[] { trozos[1] });
+                            if (partida != null)
+                                if (!partida.IsDisposed)
+                                    partida.Invoke(new Action<string>(partida.ReceiveMessage), new object[] { trozos[1] });
                             break;
                         case 6:
                             if (Convert.ToInt32(trozos[1]) == -1)
