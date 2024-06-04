@@ -117,7 +117,7 @@ namespace Cliente
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e) //Temporizador para enviar coordenadas
         {
-            if (gameControl1.players[0] != null)
+            if (gameControl1.players != null)
             {
                 string outcoming = $"9/0:{gameControl1.players[0].position.X.ToString()};{gameControl1.players[0].position.Y.ToString()}";
                 SetStatusBar(this, $"Se ha enviado : {outcoming} con periodo {timer.Interval.ToString()}");
