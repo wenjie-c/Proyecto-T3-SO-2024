@@ -93,7 +93,7 @@ Despues de introducir los dos parametros dar click al boton de sign up.
 
 ### En el server
 
-`1/Registro con exito`
+`1/Registro correcto`
 
 Respuesta a la petición de sign up del cliente.
 
