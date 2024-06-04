@@ -117,12 +117,18 @@ namespace Cliente
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e) //Temporizador para enviar coordenadas
         {
+<<<<<<< Updated upstream
             if (gameControl1.players != null && server != null)
             {
                 string outcoming = $"9/0:{gameControl1.players[0].position.X.ToString()};{gameControl1.players[0].position.Y.ToString()}";
                 SetStatusBar(this, $"Se ha enviado : {outcoming} con periodo {timer.Interval.ToString()}");
                 server.Send(System.Text.Encoding.ASCII.GetBytes(outcoming));
             }
+=======
+            string outcoming = $"9/0:{gameControl1.players[0].position.X.ToString()};{gameControl1.players[0].position.Y.ToString()}";
+            SetStatusBar(this, $"Se ha enviado : {outcoming} con periodo {timer.Interval.ToString()}");
+            server.Send(System.Text.Encoding.ASCII.GetBytes(outcoming));
+>>>>>>> Stashed changes
         }
         // --- Fin de funciones para GameControl ---
 

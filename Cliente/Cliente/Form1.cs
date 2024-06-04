@@ -39,6 +39,11 @@ namespace Cliente
                 if (int.TryParse(trozos[0],out n)){
                     switch (Convert.ToInt32(trozos[0]))
                     {
+                       case 1:
+                            this.id_jugador = Convert.ToInt32(trozos[1]);
+                            MessageBox.Show("Bienvenido: " + trozos[1]);
+
+                            break;
                         case 2:
                             this.id_jugador = Convert.ToInt32(trozos[1]);
                             MessageBox.Show("Tu id de jugador es: " + trozos[1]);
@@ -220,11 +225,6 @@ namespace Cliente
                 string mensaje = $"1/{nombre_tb.Text}/{password_tb.Text}";
                 byte[] msg = System.Text.Encoding.ASCII.GetBytes(mensaje);
                 server.Send(msg);
-                byte[] msg2 = new byte[80];
-                server.Receive(msg2);
-                mensaje = Encoding.ASCII.GetString(msg2).Split('\0')[0];
-                MessageBox.Show("Bienvenido al servidor" + mensaje);
-
             }
             catch (SocketException err)
             {
@@ -283,13 +283,27 @@ namespace Cliente
             }
             //partida.ShowDialog();
         }
+<<<<<<< Updated upstream
 
         private void Partida_FormClosing(object sender, FormClosingEventArgs e)
         {
+=======
+<<<<<<< HEAD
+        internal void setInvitado()
+        {
+=======
+
+        private void Partida_FormClosing(object sender, FormClosingEventArgs e)
+        {
+>>>>>>> Stashed changes
             closedjuego = true;
         }
 
         internal void setInvitado() {
+<<<<<<< Updated upstream
+=======
+>>>>>>> dd0d794ab019552e33be4d02f82fcac723945772
+>>>>>>> Stashed changes
             invitadoflag = true;
         }
         internal void UpdateJugadorB(string trozo)
@@ -297,8 +311,17 @@ namespace Cliente
             partida.UpdateControl(trozo);
         }
 
+<<<<<<< Updated upstream
         private bool getclosedjuego() { return closedjuego; }
         
+=======
+<<<<<<< HEAD
+
+=======
+        private bool getclosedjuego() { return closedjuego; }
+        
+>>>>>>> dd0d794ab019552e33be4d02f82fcac723945772
+>>>>>>> Stashed changes
     }
 }
 
