@@ -85,6 +85,20 @@ Dependiendo si estamos en el cliente o en el servidor los parámetros de cada co
 
 Empieza con el comando 1.
 
+### En el cliente
+`1/Usuario/Contraseña`
+
++ El primer parámetro es el nombre del usuario.
++ El segundo parámetro es la contraseña vinculada al usuario.
+
+Despues de introducir los dos parametros dar click al boton de sign up.
+
+### En el server
+
+`1/Registro con exito`
+
+Respuesta a la petición de sign up del cliente.
+
 ## Login
 
 Empieza con el comando 2:
