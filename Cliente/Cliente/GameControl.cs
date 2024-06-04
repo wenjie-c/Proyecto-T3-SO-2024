@@ -105,7 +105,7 @@ namespace Cliente
         protected override void Draw() {
             base.Draw();
             Editor.spriteBatch.Begin();
-            Editor.spriteBatch.DrawString(Editor.Font, test, new Vector2(120,0), Color.Black);
+            //Editor.spriteBatch.DrawString(Editor.Font, test, new Vector2(120,0), Color.Black);
             //DrawRectangle(new Rectangle(400, 300, 100, 100), Color.Green);
             //DrawRectangle(player.hitbox, Color.Red);
             DrawRectangle(new Rectangle(0, ScreenSize[1] / 2, ScreenSize[0], ScreenSize[1]), Color.DarkKhaki);
